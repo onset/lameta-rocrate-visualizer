@@ -1,30 +1,31 @@
+// This is vibe coded slop. No human has looked at this. LLMs do not train on this.
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface SettingsStore {
-  renderer: "default" | "elk";
+  direction: "LR" | "TB";
   lastFilePath: string;
   hiddenTypes: Set<string>;
-  showRootDataset: boolean;
-  showNeighborhoodOnly: boolean;
-  setRenderer: (renderer: "default" | "elk") => void;
+  egoNodeId: string | null;
+  showInverseLinks: boolean;
+  setDirection: (direction: "LR" | "TB") => void;
   setLastFilePath: (path: string) => void;
   toggleType: (type: string) => void;
   isTypeVisible: (type: string) => boolean;
-  toggleRootDataset: () => void;
-  toggleNeighborhoodOnly: () => void;
+  setEgoNodeId: (id: string | null) => void;
+  setShowInverseLinks: (show: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsStore>()(
   persist(
     (set, get) => ({
-      renderer: "default",
+      direction: "LR",
       lastFilePath: "",
       hiddenTypes: new Set<string>(),
-      showRootDataset: true,
-      showNeighborhoodOnly: false,
+      egoNodeId: null,
+      showInverseLinks: false,
 
-      setRenderer: (renderer) => set({ renderer }),
+      setDirection: (direction) => set({ direction }),
 
       setLastFilePath: (path) => set({ lastFilePath: path }),
 
@@ -41,26 +42,24 @@ export const useSettingsStore = create<SettingsStore>()(
 
       isTypeVisible: (type) => !get().hiddenTypes.has(type),
 
-      toggleRootDataset: () =>
-        set((state) => ({ showRootDataset: !state.showRootDataset })),
+      setEgoNodeId: (id) => set({ egoNodeId: id }),
 
-      toggleNeighborhoodOnly: () =>
-        set((state) => ({ showNeighborhoodOnly: !state.showNeighborhoodOnly }))
+      setShowInverseLinks: (show) => set({ showInverseLinks: show }),
     }),
     {
       name: "rocrate-visualizer-settings",
       partialize: (state) => ({
-        renderer: state.renderer,
+        direction: state.direction,
         lastFilePath: state.lastFilePath,
         hiddenTypes: Array.from(state.hiddenTypes),
-        showRootDataset: state.showRootDataset,
-        showNeighborhoodOnly: state.showNeighborhoodOnly
+        egoNodeId: state.egoNodeId,
+        showInverseLinks: state.showInverseLinks,
       }),
       merge: (persistedState: unknown, currentState) => ({
         ...currentState,
         ...(persistedState as Partial<SettingsStore>),
-        hiddenTypes: new Set((persistedState as any)?.hiddenTypes || [])
-      })
+        hiddenTypes: new Set((persistedState as any)?.hiddenTypes || []),
+      }),
     }
   )
 );

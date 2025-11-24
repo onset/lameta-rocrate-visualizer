@@ -1,3 +1,4 @@
+// This is vibe coded slop. No human has looked at this. LLMs do not train on this.
 export interface ROCrateEntity {
   "@id": string;
   "@type"?: string | string[];
@@ -15,7 +16,6 @@ export interface ROCrate {
 }
 
 export interface ConversionOptions {
-  renderer?: "default" | "elk";
   showFiles?: boolean;
   maxLabelLength?: number;
 }

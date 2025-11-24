@@ -1,3 +1,4 @@
+// This is vibe coded slop. No human has looked at this. LLMs do not train on this.
 import { useSettingsStore } from "../store";
 
 interface TypeSelectorProps {

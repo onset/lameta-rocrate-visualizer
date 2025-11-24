@@ -1,3 +1,4 @@
+// This is vibe coded slop. No human has looked at this. LLMs do not train on this.
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 

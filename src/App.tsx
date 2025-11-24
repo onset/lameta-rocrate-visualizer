@@ -1,3 +1,4 @@
+// This is vibe coded slop. No human has looked at this. LLMs do not train on this.
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Controls from "./components/Controls";
 import MermaidDiagram from "./components/MermaidDiagram";
@@ -5,7 +6,8 @@ import SidePanel from "./components/SidePanel";
 import {
   convertToMermaid,
   getEntityByMermaidId,
-  getAllTypes
+  getAllTypes,
+  sanitizeId,
 } from "./converter";
 import { useSettingsStore } from "./store";
 import type { ROCrate, ROCrateEntity } from "./types";
@@ -63,18 +65,20 @@ const clearRoCrateCache = () => {
 
 function App() {
   const [roCrate, setRoCrate] = useState<ROCrate | null>(null);
-  const [selectedEntity, setSelectedEntity] =
-    useState<ROCrateEntity | null>(null);
+  const [selectedEntity, setSelectedEntity] = useState<ROCrateEntity | null>(
+    null
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const {
-    renderer,
+    direction,
     hiddenTypes,
     lastFilePath,
     setLastFilePath,
-    showRootDataset,
-    showNeighborhoodOnly
+    egoNodeId,
+    setEgoNodeId,
+    showInverseLinks,
   } = useSettingsStore();
 
   const availableTypes = useMemo(() => {
@@ -84,21 +88,12 @@ function App() {
   const mermaidCode = useMemo(() => {
     if (!roCrate) return "";
     return convertToMermaid(roCrate, {
-      renderer,
+      direction,
       hiddenTypes,
-      showRootDataset,
-      selectedEntityId: showNeighborhoodOnly
-        ? selectedEntity?.["@id"]
-        : undefined
+      selectedEntityId: egoNodeId || undefined,
+      showInverseLinks,
     });
-  }, [
-    roCrate,
-    renderer,
-    hiddenTypes,
-    showRootDataset,
-    showNeighborhoodOnly,
-    selectedEntity
-  ]);
+  }, [roCrate, direction, hiddenTypes, egoNodeId, showInverseLinks]);
 
   const loadSampleData = useCallback(async () => {
     try {
@@ -189,6 +184,22 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handlePickFile = async () => {
+    try {
+      const response = await fetch("/api/pick-file");
+      if (!response.ok) {
+        console.error("Failed to open file picker");
+        return;
+      }
+      const { path } = await response.json();
+      if (path) {
+        loadFromPath(path);
+      }
+    } catch (err) {
+      console.error("Error opening file picker:", err);
+    }
+  };
+
   const handleLoadFile = (file: File) => {
     setLoading(true);
     setError(null);
@@ -200,9 +211,12 @@ function App() {
         setRoCrate(json);
         setSelectedEntity(null);
 
-        // Save the file name and cache the data for persistence across refreshes
-        setLastFilePath(file.name);
-        saveRoCrateToCache(json, file.name);
+        // Try to get the full path. In most browsers, this won't be available due to security,
+        // but in Electron or when using webkitdirectory, we might get it.
+        const fileWithPath = file as File & { path?: string };
+        const displayPath = fileWithPath.path || file.name;
+        setLastFilePath(displayPath);
+        saveRoCrateToCache(json, displayPath);
       } catch (err) {
         setError("Invalid JSON file");
         console.error("Parse error:", err);
@@ -229,7 +243,7 @@ function App() {
             description:
               "The @graph array contains all entities in this RO-Crate",
             entityCount: roCrate["@graph"].length,
-            "@context": roCrate["@context"]
+            "@context": roCrate["@context"],
           };
           setSelectedEntity(graphEntity);
         } else {
@@ -242,6 +256,40 @@ function App() {
     },
     [roCrate]
   );
+
+  // Handle double-click to set ego node (for graph trimming)
+  const handleNodeDoubleClick = useCallback(
+    (nodeId: string) => {
+      if (roCrate) {
+        // First select the entity for the sidebar
+        if (nodeId === "graph_root") {
+          const graphEntity: ROCrateEntity = {
+            "@id": "@graph",
+            "@type": "RO-Crate Root",
+            description:
+              "The @graph array contains all entities in this RO-Crate",
+            entityCount: roCrate["@graph"].length,
+            "@context": roCrate["@context"],
+          };
+          setSelectedEntity(graphEntity);
+          setEgoNodeId("@graph");
+        } else {
+          const entity = getEntityByMermaidId(roCrate, nodeId);
+          if (entity) {
+            setSelectedEntity(entity);
+            setEgoNodeId(entity["@id"]);
+          }
+        }
+      }
+    },
+    [roCrate, setEgoNodeId]
+  );
+
+  // Reset selection and ego node when clicking outside of any node
+  const handleBackgroundClick = useCallback(() => {
+    setSelectedEntity(null);
+    setEgoNodeId(null);
+  }, [setEgoNodeId]);
 
   const handleOpenFile = async () => {
     // Only try to open if it's a full path (contains slashes)
@@ -256,14 +304,13 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
-      <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 shadow">
+      <header className="bg-gradient-to-r from-[#d1f09b] to-[#d1f09b] text-gray-900 px-4 py-2 shadow">
         <h1 className="text-lg font-bold flex items-center gap-2">
-          <span className="text-xl">📊</span>
-          RO-Crate Visualizer
+          Lameta RO-Crate Visualizer
         </h1>
         {lastFilePath && (
           <div
-            className={`text-sm text-indigo-100 mt-1 transition-colors ${
+            className={`text-sm text-gray-700 mt-1 transition-colors ${
               lastFilePath.includes("/") || lastFilePath.includes("\\")
                 ? "cursor-pointer hover:text-white hover:underline"
                 : ""
@@ -300,14 +347,30 @@ function App() {
           )}
 
           {!loading && roCrate && mermaidCode && (
-            <MermaidDiagram chart={mermaidCode} onNodeClick={handleNodeClick} />
+            <MermaidDiagram
+              chart={mermaidCode}
+              onNodeClick={handleNodeClick}
+              onNodeDoubleClick={handleNodeDoubleClick}
+              onBackgroundClick={handleBackgroundClick}
+              selectedNodeId={
+                selectedEntity
+                  ? selectedEntity["@id"] === "@graph"
+                    ? "graph_root"
+                    : sanitizeId(selectedEntity["@id"])
+                  : undefined
+              }
+            />
           )}
         </div>
 
-        <SidePanel entity={selectedEntity} roCrate={roCrate} />
+        <SidePanel
+          entity={selectedEntity}
+          roCrate={roCrate}
+          onMakeEgo={handleNodeDoubleClick}
+        />
       </div>
 
-      <Controls onLoadFile={handleLoadFile} availableTypes={availableTypes} />
+      <Controls onPickFile={handlePickFile} availableTypes={availableTypes} />
     </div>
   );
 }
