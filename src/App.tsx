@@ -14,12 +14,19 @@ import type { ROCrate, ROCrateEntity } from "./types";
 
 // LocalStorage key for cached RO-Crate data
 const ROCRATE_CACHE_KEY = "rocrate-visualizer-cached-data";
-const SAMPLE_ROCRATE_PATH = "/sample-ro-crate.json";
-const BUNDLED_ROCRATE_PATH = "/bundled-ro-crate.json";
+const basePath = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 
-// Detect if we're in embedded mode (production build on GitHub Pages)
-// In embedded mode, we only show the bundled file without file picker
-const isEmbeddedMode = import.meta.env.PROD;
+const SAMPLE_ROCRATE_PATH = `${basePath}sample-ro-crate.json`;
+const SHIPPED_ROCRATE_PATH = `${basePath}hewya-ro-crate.json`;
+
+// Enables single-file viewer mode either via env flag or production builds
+const isSingleFileMode =
+  import.meta.env.VITE_SINGLE_FILE_MODE === "true" || import.meta.env.PROD;
+const DEFAULT_ROCRATE_PATH = isSingleFileMode
+  ? SHIPPED_ROCRATE_PATH
+  : SAMPLE_ROCRATE_PATH;
 
 const isSamplePath = (path?: string | null) => path === SAMPLE_ROCRATE_PATH;
 
@@ -88,29 +95,24 @@ function App() {
     });
   }, [roCrate, direction, hiddenTypes, egoNodeId, showInverseLinks]);
 
-  const loadSampleData = useCallback(async () => {
+  const loadDefaultData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      // In embedded mode (production), load the bundled file
-      // In development mode, load the sample file
-      const fileToLoad = isEmbeddedMode ? BUNDLED_ROCRATE_PATH : SAMPLE_ROCRATE_PATH;
-      const response = await fetch(fileToLoad);
+      const response = await fetch(DEFAULT_ROCRATE_PATH);
 
       if (!response.ok) {
-        throw new Error("Failed to load sample data");
+        throw new Error("Failed to load bundled data");
       }
 
       const data = await response.json();
       setRoCrate(data);
-      setLastFilePath(fileToLoad);
-      clearRoCrateCache(); // Clear cache when loading sample
+      setLastFilePath(DEFAULT_ROCRATE_PATH);
+      clearRoCrateCache(); // Clear cache when loading shipped/sample data
     } catch (err) {
-      setError(
-        "Could not load sample data. Please load your own RO-Crate JSON file."
-      );
-      console.error("Error loading sample:", err);
+      setError("Could not load bundled RO-Crate data.");
+      console.error("Error loading bundled data:", err);
     } finally {
       setLoading(false);
     }
@@ -137,18 +139,18 @@ function App() {
         clearRoCrateCache(); // Clear cache when loading from path
       } catch (err) {
         console.error("Error loading from path:", err);
-        loadSampleData();
+        loadDefaultData();
       } finally {
         setLoading(false);
       }
     },
-    [setLastFilePath, loadSampleData]
+    [setLastFilePath, loadDefaultData]
   );
 
   useEffect(() => {
-    // In embedded mode (production/GitHub Pages), always load the bundled file
-    if (isEmbeddedMode) {
-      loadSampleData();
+    // In single-file mode (production/GitHub Pages), always load the shipped file
+    if (isSingleFileMode) {
+      loadDefaultData();
       return;
     }
 
@@ -158,15 +160,15 @@ function App() {
 
     if (pathParam) {
       if (isSamplePath(pathParam)) {
-        loadSampleData();
+        loadDefaultData();
       } else if (isLikelyFilesystemPath(pathParam)) {
         loadFromPath(pathParam);
       } else {
-        loadSampleData();
+        loadDefaultData();
       }
     } else if (lastFilePath) {
       if (isSamplePath(lastFilePath)) {
-        loadSampleData();
+        loadDefaultData();
       } else if (isLikelyFilesystemPath(lastFilePath)) {
         loadFromPath(lastFilePath);
       } else {
@@ -176,12 +178,12 @@ function App() {
           setRoCrate(cached.data);
         } else {
           // Cache miss or filename mismatch, load sample
-          loadSampleData();
+          loadDefaultData();
         }
       }
     } else {
       // Otherwise load sample data
-      loadSampleData();
+      loadDefaultData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -279,8 +281,8 @@ function App() {
         <h1 className="text-lg font-bold flex items-center gap-2">
           Lameta RO-Crate Visualizer
         </h1>
-        {/* In embedded mode, show collection name from RO-Crate; in dev mode, show file path */}
-        {isEmbeddedMode ? (
+        {/* In single-file mode, show collection name; otherwise show the chosen file */}
+        {isSingleFileMode ? (
           roCrate && (
             <div className="text-sm text-gray-700 mt-1">
               {roCrate["@graph"]?.find((e: ROCrateEntity) => e["@id"] === "./")?.name || "RO-Crate Collection"}
@@ -320,7 +322,7 @@ function App() {
               <div className="text-center">
                 <div className="text-red-600 mb-4">{error}</div>
                 <p className="text-gray-600 text-sm">
-                  {isEmbeddedMode ? "Error loading RO-Crate data." : "Click \"Load RO-Crate JSON\" to get started"}
+                  {isSingleFileMode ? "Error loading RO-Crate data." : "Click \"Load RO-Crate JSON\" to get started"}
                 </p>
               </div>
             </div>
@@ -350,7 +352,7 @@ function App() {
         />
       </div>
 
-      <Controls onPickFile={isEmbeddedMode ? undefined : handlePickFile} availableTypes={availableTypes} />
+      <Controls onPickFile={isSingleFileMode ? undefined : handlePickFile} availableTypes={availableTypes} />
     </div>
   );
 }

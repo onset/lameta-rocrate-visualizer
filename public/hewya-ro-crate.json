@@ -1,0 +1,681 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.2/context",
+    {
+      "ldac": "https://w3id.org/ldac/terms#",
+      "Dataset": "http://schema.org/Dataset",
+      "name": "http://schema.org/name",
+      "description": "http://schema.org/description",
+      "datePublished": "http://schema.org/datePublished",
+      "license": "http://schema.org/license"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "RepositoryCollection"
+      ],
+      "conformsTo": {
+        "@id": "https://w3id.org/ldac/profile#Collection"
+      },
+      "name": "Edolo Sample",
+      "description": "The Etoro, or Edolo, are a tribe and ethnic group of the Southern Highlands Province of Papua New Guinea. Their territory comprises the southern slopes of Mt. Sisa, along the southern edge of the central mountain range of New Guinea, near the Papuan Plateau.",
+      "datePublished": "2025-11-25T18:36:56.441Z",
+      "author": {
+        "@id": "#unknown-contributor"
+      },
+      "accountablePerson": {
+        "@id": "#unknown-contributor"
+      },
+      "dct:rightsHolder": {
+        "@id": "#unknown-contributor"
+      },
+      "license": {
+        "@id": "#collection-license"
+      },
+      "hasPart": [
+        {
+          "@id": "./hewya.sprj"
+        },
+        {
+          "@id": "DescriptionDocuments/pretend%20description.txt"
+        },
+        {
+          "@id": "OtherDocuments/some%20other%20doc.txt"
+        }
+      ],
+      "pcdm:hasMember": [
+        {
+          "@id": "#session-ETR008"
+        },
+        {
+          "@id": "#session-ETR009"
+        }
+      ],
+      "customAccessChoices": "show,hide",
+      "region": "Southern Highlands Province",
+      "ldac:subjectLanguage": [
+        {
+          "@id": "#language_etr"
+        }
+      ],
+      "inLanguage": [
+        {
+          "@id": "https://lexvo.org/id/iso639-3/und"
+        }
+      ],
+      "publisher": {
+        "@id": "#publisher-paradisec"
+      },
+      "holdingArchive": {
+        "@id": "#publisher-paradisec"
+      },
+      "contentLocation": [
+        {
+          "@id": "#place-country-Papua%20New%20Guinea"
+        }
+      ]
+    },
+    {
+      "@id": "#session-ETR008",
+      "@type": [
+        "RepositoryObject",
+        "CollectionEvent"
+      ],
+      "conformsTo": {
+        "@id": "https://w3id.org/ldac/profile#Object"
+      },
+      "name": "Under the House",
+      "description": "No description provided for this session.",
+      "datePublished": "2025-11-25T18:36:56.443Z",
+      "hasPart": [
+        {
+          "@id": "Sessions/ETR008/ETR008.session"
+        }
+      ],
+      "collectionEventType": "https://w3id.org/ldac/terms#Session",
+      "publisher": {
+        "@id": "#publisher-paradisec"
+      },
+      "author": {
+        "@id": "#unknown-contributor"
+      },
+      "accountablePerson": {
+        "@id": "#unknown-contributor"
+      },
+      "dct:rightsHolder": {
+        "@id": "#unknown-contributor"
+      },
+      "pcdm:memberOf": {
+        "@id": "./"
+      },
+      "ldac:subjectLanguage": [
+        {
+          "@id": "#language_etr"
+        }
+      ],
+      "inLanguage": {
+        "@id": "https://lexvo.org/id/iso639-3/und"
+      },
+      "ldac:linguisticGenre": [
+        {
+          "@id": "ldac:Dialogue"
+        }
+      ],
+      "ldac:speaker": [
+        {
+          "@id": "#Awi_Heole"
+        }
+      ],
+      "ldac:recorder": [
+        {
+          "@id": "#contributor-Hatton"
+        }
+      ],
+      "license": {
+        "@id": "#license-paradisec-open"
+      }
+    },
+    {
+      "@id": "People/Awi_Heole/Awi_Heole.person",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 1790,
+      "dateCreated": "2025-11-20T15:58:01.306Z",
+      "dateModified": "2025-07-30T22:35:20.811Z",
+      "encodingFormat": "application/lameta-person",
+      "name": "Awi_Heole.person",
+      "about": {
+        "@id": "#Awi_Heole"
+      }
+    },
+    {
+      "@id": "People/Awi_Heole/Awi_Heole_Photo.JPG",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "contentSize": 17403,
+      "dateCreated": "2025-11-20T15:58:01.306Z",
+      "dateModified": "2025-07-30T22:35:20.813Z",
+      "encodingFormat": "image/jpeg",
+      "name": "Awi_Heole_Photo.JPG",
+      "about": {
+        "@id": "#Awi_Heole"
+      }
+    },
+    {
+      "@id": "People/Awi_Heole/Awi_Heole_Consent.JPG",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "contentSize": 106801,
+      "dateCreated": "2025-11-20T15:58:01.306Z",
+      "dateModified": "2025-07-30T22:35:20.816Z",
+      "encodingFormat": "image/jpeg",
+      "name": "Awi_Heole_Consent.JPG",
+      "about": {
+        "@id": "#Awi_Heole"
+      }
+    },
+    {
+      "@id": "#Awi_Heole",
+      "@type": "Person",
+      "name": "Awi Heole",
+      "gender": "Male",
+      "description": "Edolo learned in Huya. Education: Grade 2. Primary Occupation: Subsistence Farmer.",
+      "subjectOf": {
+        "@id": "People/Awi_Heole/Awi_Heole.person"
+      },
+      "image": [
+        {
+          "@id": "People/Awi_Heole/Awi_Heole_Photo.JPG"
+        },
+        {
+          "@id": "People/Awi_Heole/Awi_Heole_Consent.JPG"
+        }
+      ]
+    },
+    {
+      "@id": "#contributor-Hatton",
+      "@type": "Person",
+      "name": "Hatton",
+      "description": "The lameta project could not find a matching Person for this contributor, so we do not have any further information"
+    },
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.2"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "ldac:Dialogue",
+      "@type": "DefinedTerm",
+      "name": "Conversation",
+      "inDefinedTermSet": {
+        "@id": "ldac:LinguisticGenreTerms"
+      }
+    },
+    {
+      "@id": "ldac:LinguisticGenreTerms",
+      "@type": "DefinedTermSet",
+      "name": "Linguistic Genre Terms"
+    },
+    {
+      "@id": "Sessions/ETR008/ETR008.session",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 641,
+      "dateCreated": "2025-11-25T00:56:28.670Z",
+      "dateModified": "2025-11-25T00:59:18.740Z",
+      "encodingFormat": "application/lameta-session",
+      "name": "ETR008.session",
+      "license": {
+        "@id": "#license-paradisec-open"
+      },
+      "isPartOf": {
+        "@id": "#session-ETR008"
+      }
+    },
+    {
+      "@id": "#language_etr",
+      "@type": "Language",
+      "code": "etr",
+      "name": "Edolo"
+    },
+    {
+      "@id": "https://lexvo.org/id/iso639-3/und",
+      "@type": "Language",
+      "code": "und",
+      "name": "Undetermined",
+      "description": "Language marked as undetermined because no working language was specified in lameta"
+    },
+    {
+      "@id": "#session-ETR009",
+      "@type": [
+        "RepositoryObject",
+        "CollectionEvent"
+      ],
+      "conformsTo": {
+        "@id": "https://w3id.org/ldac/profile#Object"
+      },
+      "name": "The story behind how we catch fish with poison bark",
+      "description": "Some guys talking Situation: Walking with Ilawi, we passed the plant they use to make poison for fishing, and I asked him if he'd tell me about how to do it.  We went to his house, where Awi joined us, and the two of them took turns telling parts of the \"whole story\". Setting: Sitting on their front porch",
+      "datePublished": "2025-11-25T18:36:56.443Z",
+      "hasPart": [
+        {
+          "@id": "Sessions/ETR009/ETR009.session"
+        },
+        {
+          "@id": "Sessions/ETR009/SceneHouse.JPG"
+        },
+        {
+          "@id": "Sessions/ETR009/SceneAroundCamera.JPG"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_XDoc.docx"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_Tiny_StandardAudio.wav.annotations.eaf"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_Tiny.mp4"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_Careful.mp3"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_AText.txt"
+        }
+      ],
+      "collectionEventType": "https://w3id.org/ldac/terms#Session",
+      "publisher": {
+        "@id": "#publisher-paradisec"
+      },
+      "author": {
+        "@id": "#unknown-contributor"
+      },
+      "accountablePerson": {
+        "@id": "#unknown-contributor"
+      },
+      "dct:rightsHolder": {
+        "@id": "#unknown-contributor"
+      },
+      "pcdm:memberOf": {
+        "@id": "./"
+      },
+      "startDate": "2010-06-06",
+      "location": {
+        "@id": "#Huya"
+      },
+      "ldac:subjectLanguage": [
+        {
+          "@id": "#language_etr"
+        }
+      ],
+      "inLanguage": {
+        "@id": "https://lexvo.org/id/iso639-3/und"
+      },
+      "ldac:linguisticGenre": [
+        {
+          "@id": "ldac:Narrative"
+        }
+      ],
+      "contentLocation": {
+        "@id": "#Huya"
+      },
+      "dateCreated": "2010-06-06",
+      "ldac:participant": [
+        {
+          "@id": "#Awi_Heole"
+        },
+        {
+          "@id": "#Ilawi_Amosa"
+        }
+      ],
+      "ldac:recorder": [
+        {
+          "@id": "#contributor-Hatton"
+        }
+      ],
+      "ldac:speaker": [
+        {
+          "@id": "#Awi_Heole"
+        }
+      ],
+      "license": {
+        "@id": "#license-paradisec-open"
+      }
+    },
+    {
+      "@id": "People/Ilawi_Amosa/Ilawi_Amosa.person",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 1696,
+      "dateCreated": "2025-11-20T15:58:01.313Z",
+      "dateModified": "2025-11-20T15:58:07.245Z",
+      "encodingFormat": "application/lameta-person",
+      "name": "Ilawi_Amosa.person",
+      "about": {
+        "@id": "#Ilawi_Amosa"
+      }
+    },
+    {
+      "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Photo.jpg",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "contentSize": 19968,
+      "dateCreated": "2025-11-20T15:58:01.316Z",
+      "dateModified": "2025-07-30T22:35:20.814Z",
+      "encodingFormat": "image/jpeg",
+      "name": "Ilawi_Amosa_Photo.jpg",
+      "about": {
+        "@id": "#Ilawi_Amosa"
+      }
+    },
+    {
+      "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Consent.JPG",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "contentSize": 264486,
+      "dateCreated": "2025-11-20T15:58:01.314Z",
+      "dateModified": "2025-07-30T22:35:20.820Z",
+      "encodingFormat": "image/jpeg",
+      "name": "Ilawi_Amosa_Consent.JPG",
+      "about": {
+        "@id": "#Ilawi_Amosa"
+      }
+    },
+    {
+      "@id": "#Ilawi_Amosa",
+      "@type": "Person",
+      "name": "Ilawi Amosa",
+      "ldac:age": "50",
+      "gender": "Male",
+      "description": "Edolo learned in Aiya. Education: Some bible school, some literacy training. Primary Occupation: Subsistence Farmer.",
+      "subjectOf": {
+        "@id": "People/Ilawi_Amosa/Ilawi_Amosa.person"
+      },
+      "image": [
+        {
+          "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Photo.jpg"
+        },
+        {
+          "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Consent.JPG"
+        }
+      ]
+    },
+    {
+      "@id": "ldac:Narrative",
+      "@type": "DefinedTerm",
+      "name": "Narrative",
+      "description": "A monologic discourse which represents temporally organized events.",
+      "inDefinedTermSet": {
+        "@id": "ldac:LinguisticGenreTerms"
+      }
+    },
+    {
+      "@id": "#Huya",
+      "@type": "Place",
+      "name": "Huya"
+    },
+    {
+      "@id": "Sessions/ETR009/ETR009.session",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 1145,
+      "dateCreated": "2025-11-20T15:58:01.317Z",
+      "dateModified": "2025-11-25T00:59:36.999Z",
+      "encodingFormat": "application/lameta-session",
+      "name": "ETR009.session",
+      "license": {
+        "@id": "#license-paradisec-open"
+      },
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/SceneHouse.JPG",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "contentSize": 89181,
+      "dateCreated": "2025-11-20T15:58:01.327Z",
+      "dateModified": "2023-04-07T14:35:25.910Z",
+      "encodingFormat": "image/jpeg",
+      "name": "SceneHouse.JPG",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/SceneAroundCamera.JPG",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "contentSize": 83027,
+      "dateCreated": "2025-11-20T15:58:01.326Z",
+      "dateModified": "2023-04-07T14:35:25.910Z",
+      "encodingFormat": "image/jpeg",
+      "name": "SceneAroundCamera.JPG",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/ETR009_XDoc.docx",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 12818,
+      "dateCreated": "2025-11-20T15:58:01.325Z",
+      "dateModified": "2023-04-07T14:35:25.910Z",
+      "encodingFormat": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "name": "ETR009_XDoc.docx",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/ETR009_Tiny_StandardAudio.wav.annotations.eaf",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 3478,
+      "dateCreated": "2025-11-20T15:58:01.324Z",
+      "dateModified": "2023-04-07T14:35:25.910Z",
+      "encodingFormat": "text/x-eaf+xml",
+      "name": "ETR009_Tiny_StandardAudio.wav.annotations.eaf",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/ETR009_Tiny.mp4",
+      "@type": [
+        "File",
+        "VideoObject"
+      ],
+      "contentSize": 473348,
+      "dateCreated": "2025-11-20T15:58:01.322Z",
+      "dateModified": "2023-04-07T14:35:25.917Z",
+      "encodingFormat": "video/mp4",
+      "name": "ETR009_Tiny.mp4",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/ETR009_Careful.mp3",
+      "@type": [
+        "File",
+        "AudioObject"
+      ],
+      "contentSize": 310021,
+      "dateCreated": "2025-11-20T15:58:01.319Z",
+      "dateModified": "2023-04-07T14:35:25.910Z",
+      "encodingFormat": "audio/mpeg",
+      "name": "ETR009_Careful.mp3",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/ETR009_AText.txt",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 0,
+      "dateCreated": "2025-11-20T15:58:01.318Z",
+      "dateModified": "2023-04-07T14:35:25.906Z",
+      "encodingFormat": "text/plain",
+      "name": "ETR009_AText.txt",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
+    },
+    {
+      "@id": "ldac:AccessTypes",
+      "@type": "DefinedTermSet",
+      "name": "Access Types"
+    },
+    {
+      "@id": "ldac:OpenAccess",
+      "@type": "DefinedTerm",
+      "name": "Open Access",
+      "description": "Data covered by this license may be accessed as long as the license is served alongside it, and does not require any specific authorization step.",
+      "inDefinedTermSet": {
+        "@id": "ldac:AccessTypes"
+      }
+    },
+    {
+      "@id": "ldac:AuthorizedAccess",
+      "@type": "DefinedTerm",
+      "name": "Authorized Access",
+      "description": "Data covered by this license requires explicit authorization for access.",
+      "inDefinedTermSet": {
+        "@id": "ldac:AccessTypes"
+      }
+    },
+    {
+      "@id": "ldac:DataReuseLicense",
+      "@type": "Class",
+      "subClassOf": {
+        "@id": "http://schema.org/CreativeWork"
+      },
+      "description": "A license document, setting out terms for reuse of data."
+    },
+    {
+      "@id": "#license-paradisec-open",
+      "@type": "ldac:DataReuseLicense",
+      "ldac:access": {
+        "@id": "ldac:OpenAccess"
+      },
+      "description": "Marked with the PARADISEC-specific term, 'Open' which means 'Open (subject to PARADISEC access conditions)'"
+    },
+    {
+      "@id": "#collection-license",
+      "@type": "ldac:DataReuseLicense",
+      "name": "Collection License",
+      "description": "License for the collection as a whole. Individual items may have their own specific licenses.",
+      "ldac:access": {
+        "@id": "ldac:OpenAccess"
+      }
+    },
+    {
+      "@id": "./hewya.sprj",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 1638,
+      "dateCreated": "2025-11-20T15:58:01.306Z",
+      "dateModified": "2025-11-21T22:10:57.190Z",
+      "encodingFormat": "application/lameta-project",
+      "name": "hewya.sprj",
+      "license": {
+        "@id": "#collection-license"
+      },
+      "isPartOf": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "#place-country-Papua%20New%20Guinea",
+      "@type": "Place",
+      "name": "Papua New Guinea",
+      "description": "Located in Oceania"
+    },
+    {
+      "@id": "#unknown-contributor",
+      "@type": "Person",
+      "name": "Unknown"
+    },
+    {
+      "@id": "#publisher-paradisec",
+      "@type": "Organization",
+      "name": "PARADISEC"
+    },
+    {
+      "@id": "DescriptionDocuments/pretend%20description.txt",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 569,
+      "dateCreated": "2025-11-20T15:58:01.302Z",
+      "dateModified": "2023-04-07T14:35:25.904Z",
+      "encodingFormat": "text/plain",
+      "name": "pretend description.txt",
+      "license": {
+        "@id": "#collection-license"
+      },
+      "isPartOf": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "OtherDocuments/some%20other%20doc.txt",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "contentSize": 290,
+      "dateCreated": "2025-11-20T15:58:01.306Z",
+      "dateModified": "2023-04-07T14:35:25.905Z",
+      "encodingFormat": "text/plain",
+      "name": "some other doc.txt",
+      "license": {
+        "@id": "#collection-license"
+      },
+      "isPartOf": {
+        "@id": "./"
+      }
+    }
+  ]
+}
