@@ -5,11 +5,13 @@ import { useSettingsStore } from "../store";
 interface ControlsProps {
   onPickFile?: () => void;
   availableTypes: string[];
+  downloadUrl?: string;
 }
 
 export default function Controls({
   onPickFile,
   availableTypes,
+  downloadUrl,
 }: ControlsProps) {
   const {
     direction,
@@ -138,7 +140,16 @@ export default function Controls({
           )}
         </div>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-2">
+          {downloadUrl && (
+            <a
+              href={downloadUrl}
+              download
+              className="px-3 py-1.5 bg-white border border-[#8bc34a] text-[#4b6f1a] rounded hover:bg-[#f4ffe3] transition-colors font-medium"
+            >
+              Download JSON
+            </a>
+          )}
           <button
             onClick={() => setShowHelpModal(true)}
             className="px-3 py-1.5 bg-[#8bc34a] text-white rounded hover:bg-[#7cb342] transition-colors flex items-center gap-1"

@@ -282,31 +282,33 @@ function App() {
           Lameta RO-Crate Visualizer
         </h1>
         {/* In single-file mode, show collection name; otherwise show the chosen file */}
-        {isSingleFileMode ? (
-          roCrate && (
-            <div className="text-sm text-gray-700 mt-1">
-              {roCrate["@graph"]?.find((e: ROCrateEntity) => e["@id"] === "./")?.name || "RO-Crate Collection"}
-            </div>
-          )
-        ) : (
-          lastFilePath && (
-            <div
-              className={`text-sm text-gray-700 mt-1 transition-colors ${
-                lastFilePath.includes("/") || lastFilePath.includes("\\")
-                  ? "cursor-pointer hover:text-white hover:underline"
-                  : ""
-              }`}
-              onClick={handleOpenFile}
-              title={
-                lastFilePath.includes("/") || lastFilePath.includes("\\")
-                  ? "Click to open in default application"
-                  : ""
-              }
-            >
-              {lastFilePath}
-            </div>
-          )
-        )}
+        {isSingleFileMode
+          ? roCrate && (
+              <div className="text-sm text-gray-700 mt-1 flex items-center gap-2">
+                <span>
+                  {roCrate["@graph"]?.find(
+                    (e: ROCrateEntity) => e["@id"] === "./"
+                  )?.name || "RO-Crate Collection"}
+                </span>
+              </div>
+            )
+          : lastFilePath && (
+              <div
+                className={`text-sm text-gray-700 mt-1 transition-colors ${
+                  lastFilePath.includes("/") || lastFilePath.includes("\\")
+                    ? "cursor-pointer hover:text-white hover:underline"
+                    : ""
+                }`}
+                onClick={handleOpenFile}
+                title={
+                  lastFilePath.includes("/") || lastFilePath.includes("\\")
+                    ? "Click to open in default application"
+                    : ""
+                }
+              >
+                {lastFilePath}
+              </div>
+            )}
       </header>
 
       <div className="flex-1 flex overflow-hidden">
@@ -322,7 +324,9 @@ function App() {
               <div className="text-center">
                 <div className="text-red-600 mb-4">{error}</div>
                 <p className="text-gray-600 text-sm">
-                  {isSingleFileMode ? "Error loading RO-Crate data." : "Click \"Load RO-Crate JSON\" to get started"}
+                  {isSingleFileMode
+                    ? "Error loading RO-Crate data."
+                    : 'Click "Load RO-Crate JSON" to get started'}
                 </p>
               </div>
             </div>
@@ -352,7 +356,11 @@ function App() {
         />
       </div>
 
-      <Controls onPickFile={isSingleFileMode ? undefined : handlePickFile} availableTypes={availableTypes} />
+      <Controls
+        onPickFile={isSingleFileMode ? undefined : handlePickFile}
+        availableTypes={availableTypes}
+        downloadUrl={isSingleFileMode ? DEFAULT_ROCRATE_PATH : undefined}
+      />
     </div>
   );
 }

@@ -286,7 +286,7 @@ export default function MermaidDiagram({
           e.stopPropagation();
           handleResetView();
         }}
-        className="absolute top-4 right-4 inline-flex items-center rounded-md border border-gray-300 bg-white/90 px-3 py-1 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:scale-95 cursor-pointer z-10"
+        className="absolute top-4 right-4 inline-flex items-center rounded-md border border-[#8bc34a] bg-white/95 px-3 py-1 text-sm font-medium text-[#4b6f1a] shadow-sm transition hover:bg-[#f4ffe3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8bc34a] active:scale-95 cursor-pointer z-10"
         title="Reset zoom and pan"
         data-testid="diagram-reset-view"
       >
