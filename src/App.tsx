@@ -15,6 +15,11 @@ import type { ROCrate, ROCrateEntity } from "./types";
 // LocalStorage key for cached RO-Crate data
 const ROCRATE_CACHE_KEY = "rocrate-visualizer-cached-data";
 const SAMPLE_ROCRATE_PATH = "/sample-ro-crate.json";
+const BUNDLED_ROCRATE_PATH = "/bundled-ro-crate.json";
+
+// Detect if we're in embedded mode (production build on GitHub Pages)
+// In embedded mode, we only show the bundled file without file picker
+const isEmbeddedMode = import.meta.env.PROD;
 
 const isSamplePath = (path?: string | null) => path === SAMPLE_ROCRATE_PATH;
 
@@ -26,18 +31,6 @@ const isLikelyFilesystemPath = (path?: string | null) => {
     path.startsWith("\\\\") ||
     path.startsWith("/")
   );
-};
-
-// Helper to save RO-Crate to localStorage
-const saveRoCrateToCache = (data: ROCrate, filename: string) => {
-  try {
-    localStorage.setItem(
-      ROCRATE_CACHE_KEY,
-      JSON.stringify({ data, filename, timestamp: Date.now() })
-    );
-  } catch (err) {
-    console.warn("Failed to cache RO-Crate data:", err);
-  }
 };
 
 // Helper to load RO-Crate from localStorage
@@ -100,7 +93,10 @@ function App() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(SAMPLE_ROCRATE_PATH);
+      // In embedded mode (production), load the bundled file
+      // In development mode, load the sample file
+      const fileToLoad = isEmbeddedMode ? BUNDLED_ROCRATE_PATH : SAMPLE_ROCRATE_PATH;
+      const response = await fetch(fileToLoad);
 
       if (!response.ok) {
         throw new Error("Failed to load sample data");
@@ -108,7 +104,7 @@ function App() {
 
       const data = await response.json();
       setRoCrate(data);
-      setLastFilePath(SAMPLE_ROCRATE_PATH);
+      setLastFilePath(fileToLoad);
       clearRoCrateCache(); // Clear cache when loading sample
     } catch (err) {
       setError(
@@ -150,7 +146,13 @@ function App() {
   );
 
   useEffect(() => {
-    // Check for path in URL query parameter first
+    // In embedded mode (production/GitHub Pages), always load the bundled file
+    if (isEmbeddedMode) {
+      loadSampleData();
+      return;
+    }
+
+    // Development mode: Check for path in URL query parameter first
     const urlParams = new URLSearchParams(window.location.search);
     const pathParam = urlParams.get("path");
 
@@ -198,37 +200,6 @@ function App() {
     } catch (err) {
       console.error("Error opening file picker:", err);
     }
-  };
-
-  const handleLoadFile = (file: File) => {
-    setLoading(true);
-    setError(null);
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const json = JSON.parse(e.target?.result as string);
-        setRoCrate(json);
-        setSelectedEntity(null);
-
-        // Try to get the full path. In most browsers, this won't be available due to security,
-        // but in Electron or when using webkitdirectory, we might get it.
-        const fileWithPath = file as File & { path?: string };
-        const displayPath = fileWithPath.path || file.name;
-        setLastFilePath(displayPath);
-        saveRoCrateToCache(json, displayPath);
-      } catch (err) {
-        setError("Invalid JSON file");
-        console.error("Parse error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    reader.onerror = () => {
-      setError("Error reading file");
-      setLoading(false);
-    };
-    reader.readAsText(file);
   };
 
   const handleNodeClick = useCallback(
@@ -308,22 +279,31 @@ function App() {
         <h1 className="text-lg font-bold flex items-center gap-2">
           Lameta RO-Crate Visualizer
         </h1>
-        {lastFilePath && (
-          <div
-            className={`text-sm text-gray-700 mt-1 transition-colors ${
-              lastFilePath.includes("/") || lastFilePath.includes("\\")
-                ? "cursor-pointer hover:text-white hover:underline"
-                : ""
-            }`}
-            onClick={handleOpenFile}
-            title={
-              lastFilePath.includes("/") || lastFilePath.includes("\\")
-                ? "Click to open in default application"
-                : ""
-            }
-          >
-            {lastFilePath}
-          </div>
+        {/* In embedded mode, show collection name from RO-Crate; in dev mode, show file path */}
+        {isEmbeddedMode ? (
+          roCrate && (
+            <div className="text-sm text-gray-700 mt-1">
+              {roCrate["@graph"]?.find((e: ROCrateEntity) => e["@id"] === "./")?.name || "RO-Crate Collection"}
+            </div>
+          )
+        ) : (
+          lastFilePath && (
+            <div
+              className={`text-sm text-gray-700 mt-1 transition-colors ${
+                lastFilePath.includes("/") || lastFilePath.includes("\\")
+                  ? "cursor-pointer hover:text-white hover:underline"
+                  : ""
+              }`}
+              onClick={handleOpenFile}
+              title={
+                lastFilePath.includes("/") || lastFilePath.includes("\\")
+                  ? "Click to open in default application"
+                  : ""
+              }
+            >
+              {lastFilePath}
+            </div>
+          )
         )}
       </header>
 
@@ -340,7 +320,7 @@ function App() {
               <div className="text-center">
                 <div className="text-red-600 mb-4">{error}</div>
                 <p className="text-gray-600 text-sm">
-                  Click "Load RO-Crate JSON" to get started
+                  {isEmbeddedMode ? "Error loading RO-Crate data." : "Click \"Load RO-Crate JSON\" to get started"}
                 </p>
               </div>
             </div>
@@ -370,7 +350,7 @@ function App() {
         />
       </div>
 
-      <Controls onPickFile={handlePickFile} availableTypes={availableTypes} />
+      <Controls onPickFile={isEmbeddedMode ? undefined : handlePickFile} availableTypes={availableTypes} />
     </div>
   );
 }

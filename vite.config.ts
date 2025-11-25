@@ -9,7 +9,10 @@ import { promisify } from "util";
 const execAsync = promisify(exec);
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command, mode }) => ({
+  // Use base path for GitHub Pages deployment (production build)
+  // For dev mode use "/" for local development
+  base: command === "serve" && mode !== "preview" ? "/" : "/lameta-rocrate-visualizer/",
   plugins: [
     react(),
     {
@@ -158,4 +161,4 @@ export default defineConfig({
   server: {
     open: true,
   },
-});
+}));

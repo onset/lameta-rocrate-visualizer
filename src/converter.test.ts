@@ -39,7 +39,6 @@ describe("convertToMermaid - Neighborhood Mode", () => {
     // Convert with neighborhood filter for the file
     const result = convertToMermaid(testCrate, {
       selectedEntityId: "Sessions/ETR009/file.txt",
-      showRootDataset: true,
     });
 
     // Should contain the file node
@@ -93,7 +92,6 @@ describe("convertToMermaid - Neighborhood Mode", () => {
 
     const result = convertToMermaid(testCrate, {
       selectedEntityId: "selected",
-      showRootDataset: true,
     });
 
     // Should contain all three nodes
@@ -138,7 +136,6 @@ describe("convertToMermaid - Neighborhood Mode", () => {
 
     const result = convertToMermaid(testCrate, {
       selectedEntityId: "selected",
-      showRootDataset: true,
     });
 
     // Should contain selected and child
@@ -187,7 +184,6 @@ describe("convertToMermaid - Neighborhood Mode", () => {
     // Select the deepest entity
     const result = convertToMermaid(testCrate, {
       selectedEntityId: "level3",
-      showRootDataset: true,
     });
 
     // Should contain the selected entity and all ancestors on the path to root
@@ -229,7 +225,6 @@ describe("convertToMermaid - Neighborhood Mode", () => {
     // Select the person entity
     const result = convertToMermaid(testCrate, {
       selectedEntityId: "person1",
-      showRootDataset: true,
     });
 
     // Count occurrences of the contributor edge
@@ -284,7 +279,6 @@ describe("convertToMermaid - Neighborhood Mode", () => {
     };
 
     const result = convertToMermaid(testCrate, {
-      showRootDataset: true,
     });
 
     // Should contain all person nodes
