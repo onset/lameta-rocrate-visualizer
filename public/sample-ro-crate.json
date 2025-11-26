@@ -2,18 +2,12 @@
   "@context": [
     "https://w3id.org/ro/crate/1.2/context",
     {
-      "@vocab": "http://schema.org/"
-    },
-    "http://purl.archive.org/language-data-commons/context.json",
-    "https://w3id.org/ldac/context",
-    {
+      "ldac": "https://w3id.org/ldac/terms#",
       "Dataset": "http://schema.org/Dataset",
       "name": "http://schema.org/name",
       "description": "http://schema.org/description",
       "datePublished": "http://schema.org/datePublished",
-      "license": "http://schema.org/license",
-      "pcdm": "http://pcdm.org/models#",
-      "ldac": "https://w3id.org/ldac/terms#"
+      "license": "http://schema.org/license"
     }
   ],
   "@graph": [
@@ -25,7 +19,7 @@
       },
       "name": "Edolo Sample",
       "description": "The Etoro, or Edolo, are a tribe and ethnic group of the Southern Highlands Province of Papua New Guinea. Their territory comprises the southern slopes of Mt. Sisa, along the southern edge of the central mountain range of New Guinea, near the Papuan Plateau.",
-      "datePublished": "2025-11-25T00:58:28.284Z",
+      "datePublished": "2025-11-26T01:13:47.651Z",
       "author": {
         "@id": "#unknown-contributor"
       },
@@ -47,14 +41,17 @@
         },
         {
           "@id": "OtherDocuments/some%20other%20doc.txt"
+        },
+        {
+          "@id": "#People"
         }
       ],
       "pcdm:hasMember": [
         {
-          "@id": "Sessions/ETR008/"
+          "@id": "#session-ETR008"
         },
         {
-          "@id": "Sessions/ETR009/"
+          "@id": "#session-ETR009"
         }
       ],
       "customAccessChoices": "show,hide",
@@ -82,14 +79,14 @@
       ]
     },
     {
-      "@id": "Sessions/ETR008/",
+      "@id": "#session-ETR008",
       "@type": ["RepositoryObject", "CollectionEvent"],
       "conformsTo": {
         "@id": "https://w3id.org/ldac/profile#Object"
       },
       "name": "Under the House",
       "description": "No description provided for this session.",
-      "datePublished": "2025-11-25T00:58:28.286Z",
+      "datePublished": "2025-11-26T01:13:47.653Z",
       "hasPart": [
         {
           "@id": "Sessions/ETR008/ETR008.session"
@@ -145,10 +142,10 @@
       "dateCreated": "2025-11-20T15:58:01.306Z",
       "dateModified": "2025-07-30T22:35:20.811Z",
       "encodingFormat": "application/lameta-person",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
-      "name": "Awi_Heole.person"
+      "name": "Awi_Heole.person",
+      "about": {
+        "@id": "#Awi_Heole"
+      }
     },
     {
       "@id": "People/Awi_Heole/Awi_Heole_Photo.JPG",
@@ -157,10 +154,10 @@
       "dateCreated": "2025-11-20T15:58:01.306Z",
       "dateModified": "2025-07-30T22:35:20.813Z",
       "encodingFormat": "image/jpeg",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "Awi_Heole_Photo.JPG"
+      "name": "Awi_Heole_Photo.JPG",
+      "about": {
+        "@id": "#Awi_Heole"
+      }
     },
     {
       "@id": "People/Awi_Heole/Awi_Heole_Consent.JPG",
@@ -169,10 +166,10 @@
       "dateCreated": "2025-11-20T15:58:01.306Z",
       "dateModified": "2025-07-30T22:35:20.816Z",
       "encodingFormat": "image/jpeg",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "Awi_Heole_Consent.JPG"
+      "name": "Awi_Heole_Consent.JPG",
+      "about": {
+        "@id": "#Awi_Heole"
+      }
     },
     {
       "@id": "#Awi_Heole",
@@ -226,14 +223,14 @@
       "@type": "File",
       "contentSize": 641,
       "dateCreated": "2025-11-25T00:56:28.670Z",
-      "dateModified": "2025-11-25T00:57:24.831Z",
+      "dateModified": "2025-11-25T00:59:18.740Z",
       "encodingFormat": "application/lameta-session",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
       "name": "ETR008.session",
       "license": {
         "@id": "#license-paradisec-open"
+      },
+      "isPartOf": {
+        "@id": "#session-ETR008"
       }
     },
     {
@@ -250,14 +247,14 @@
       "description": "Language marked as undetermined because no working language was specified in lameta"
     },
     {
-      "@id": "Sessions/ETR009/",
+      "@id": "#session-ETR009",
       "@type": ["RepositoryObject", "CollectionEvent"],
       "conformsTo": {
         "@id": "https://w3id.org/ldac/profile#Object"
       },
       "name": "The story behind how we catch fish with poison bark",
       "description": "Some guys talking Situation: Walking with Ilawi, we passed the plant they use to make poison for fishing, and I asked him if he'd tell me about how to do it.  We went to his house, where Awi joined us, and the two of them took turns telling parts of the \"whole story\". Setting: Sitting on their front porch",
-      "datePublished": "2025-11-25T00:58:28.286Z",
+      "datePublished": "2025-11-26T01:13:47.653Z",
       "hasPart": [
         {
           "@id": "Sessions/ETR009/ETR009.session"
@@ -350,10 +347,10 @@
       "dateCreated": "2025-11-20T15:58:01.313Z",
       "dateModified": "2025-11-20T15:58:07.245Z",
       "encodingFormat": "application/lameta-person",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
-      "name": "Ilawi_Amosa.person"
+      "name": "Ilawi_Amosa.person",
+      "about": {
+        "@id": "#Ilawi_Amosa"
+      }
     },
     {
       "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Photo.jpg",
@@ -362,10 +359,10 @@
       "dateCreated": "2025-11-20T15:58:01.316Z",
       "dateModified": "2025-07-30T22:35:20.814Z",
       "encodingFormat": "image/jpeg",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "Ilawi_Amosa_Photo.jpg"
+      "name": "Ilawi_Amosa_Photo.jpg",
+      "about": {
+        "@id": "#Ilawi_Amosa"
+      }
     },
     {
       "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Consent.JPG",
@@ -374,10 +371,10 @@
       "dateCreated": "2025-11-20T15:58:01.314Z",
       "dateModified": "2025-07-30T22:35:20.820Z",
       "encodingFormat": "image/jpeg",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "Ilawi_Amosa_Consent.JPG"
+      "name": "Ilawi_Amosa_Consent.JPG",
+      "about": {
+        "@id": "#Ilawi_Amosa"
+      }
     },
     {
       "@id": "#Ilawi_Amosa",
@@ -417,14 +414,14 @@
       "@type": "File",
       "contentSize": 1145,
       "dateCreated": "2025-11-20T15:58:01.317Z",
-      "dateModified": "2025-11-24T22:18:18.367Z",
+      "dateModified": "2025-11-25T00:59:36.999Z",
       "encodingFormat": "application/lameta-session",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
       "name": "ETR009.session",
       "license": {
         "@id": "#license-paradisec-open"
+      },
+      "isPartOf": {
+        "@id": "#session-ETR009"
       }
     },
     {
@@ -434,10 +431,10 @@
       "dateCreated": "2025-11-20T15:58:01.327Z",
       "dateModified": "2023-04-07T14:35:25.910Z",
       "encodingFormat": "image/jpeg",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "SceneHouse.JPG"
+      "name": "SceneHouse.JPG",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
     },
     {
       "@id": "Sessions/ETR009/SceneAroundCamera.JPG",
@@ -446,10 +443,10 @@
       "dateCreated": "2025-11-20T15:58:01.326Z",
       "dateModified": "2023-04-07T14:35:25.910Z",
       "encodingFormat": "image/jpeg",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "SceneAroundCamera.JPG"
+      "name": "SceneAroundCamera.JPG",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
     },
     {
       "@id": "Sessions/ETR009/ETR009_XDoc.docx",
@@ -458,10 +455,10 @@
       "dateCreated": "2025-11-20T15:58:01.325Z",
       "dateModified": "2023-04-07T14:35:25.910Z",
       "encodingFormat": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
-      "name": "ETR009_XDoc.docx"
+      "name": "ETR009_XDoc.docx",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
     },
     {
       "@id": "Sessions/ETR009/ETR009_Tiny_StandardAudio.wav.annotations.eaf",
@@ -470,10 +467,10 @@
       "dateCreated": "2025-11-20T15:58:01.324Z",
       "dateModified": "2023-04-07T14:35:25.910Z",
       "encodingFormat": "text/x-eaf+xml",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
-      "name": "ETR009_Tiny_StandardAudio.wav.annotations.eaf"
+      "name": "ETR009_Tiny_StandardAudio.wav.annotations.eaf",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
     },
     {
       "@id": "Sessions/ETR009/ETR009_Tiny.mp4",
@@ -482,10 +479,10 @@
       "dateCreated": "2025-11-20T15:58:01.322Z",
       "dateModified": "2023-04-07T14:35:25.917Z",
       "encodingFormat": "video/mp4",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "ETR009_Tiny.mp4"
+      "name": "ETR009_Tiny.mp4",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
     },
     {
       "@id": "Sessions/ETR009/ETR009_Careful.mp3",
@@ -494,10 +491,10 @@
       "dateCreated": "2025-11-20T15:58:01.319Z",
       "dateModified": "2023-04-07T14:35:25.910Z",
       "encodingFormat": "audio/mpeg",
-      "ldac:materialType": {
-        "@id": "ldac:PrimaryMaterial"
-      },
-      "name": "ETR009_Careful.mp3"
+      "name": "ETR009_Careful.mp3",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
     },
     {
       "@id": "Sessions/ETR009/ETR009_AText.txt",
@@ -506,10 +503,10 @@
       "dateCreated": "2025-11-20T15:58:01.318Z",
       "dateModified": "2023-04-07T14:35:25.906Z",
       "encodingFormat": "text/plain",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
-      "name": "ETR009_AText.txt"
+      "name": "ETR009_AText.txt",
+      "isPartOf": {
+        "@id": "#session-ETR009"
+      }
     },
     {
       "@id": "ldac:AccessTypes",
@@ -543,38 +540,6 @@
       "description": "A license document, setting out terms for reuse of data."
     },
     {
-      "@id": "ldac:MaterialTypes",
-      "@type": "DefinedTermSet",
-      "name": "Material Types"
-    },
-    {
-      "@id": "ldac:PrimaryMaterial",
-      "@type": "DefinedTerm",
-      "name": "Primary Material",
-      "description": "The object of study, such as a literary work, film, or recording of natural discourse.",
-      "inDefinedTermSet": {
-        "@id": "ldac:MaterialTypes"
-      }
-    },
-    {
-      "@id": "ldac:Annotation",
-      "@type": "DefinedTerm",
-      "name": "Annotation",
-      "description": "The resource includes material that adds information to some other linguistic record.",
-      "inDefinedTermSet": {
-        "@id": "ldac:MaterialTypes"
-      }
-    },
-    {
-      "@id": "ldac:DerivedMaterial",
-      "@type": "DefinedTerm",
-      "name": "Derived Material",
-      "description": "This is derived from another source, such as a Primary Material, via some process, e.g. a downsampled video or a sample or an abstract of a resource that is not an annotation (an analysis or description).",
-      "inDefinedTermSet": {
-        "@id": "ldac:MaterialTypes"
-      }
-    },
-    {
       "@id": "#license-paradisec-open",
       "@type": "ldac:DataReuseLicense",
       "ldac:access": {
@@ -598,12 +563,12 @@
       "dateCreated": "2025-11-20T15:58:01.306Z",
       "dateModified": "2025-11-21T22:10:57.190Z",
       "encodingFormat": "application/lameta-project",
-      "ldac:materialType": {
-        "@id": "ldac:Annotation"
-      },
       "name": "hewya.sprj",
       "license": {
         "@id": "#collection-license"
+      },
+      "isPartOf": {
+        "@id": "./"
       }
     },
     {
@@ -632,6 +597,9 @@
       "name": "pretend description.txt",
       "license": {
         "@id": "#collection-license"
+      },
+      "isPartOf": {
+        "@id": "./"
       }
     },
     {
@@ -642,6 +610,29 @@
       "dateModified": "2023-04-07T14:35:25.905Z",
       "encodingFormat": "text/plain",
       "name": "some other doc.txt",
+      "license": {
+        "@id": "#collection-license"
+      },
+      "isPartOf": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "#People",
+      "@type": "Dataset",
+      "name": "People",
+      "description": "Directory of people associated with this collection.",
+      "hasPart": [
+        {
+          "@id": "#Awi_Heole"
+        },
+        {
+          "@id": "#Ilawi_Amosa"
+        }
+      ],
+      "isPartOf": {
+        "@id": "./"
+      },
       "license": {
         "@id": "#collection-license"
       }

@@ -19,7 +19,7 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
   : `${import.meta.env.BASE_URL}/`;
 
 const SAMPLE_ROCRATE_PATH = `${basePath}sample-ro-crate.json`;
-const SHIPPED_ROCRATE_PATH = `${basePath}hewya-ro-crate.json`;
+const SHIPPED_ROCRATE_PATH = `${basePath}sample-ro-crate.json`;
 
 // Enables single-file viewer mode either via env flag or production builds
 const isSingleFileMode =
