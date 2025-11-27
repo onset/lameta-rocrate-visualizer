@@ -19,7 +19,7 @@
       },
       "name": "Edolo Sample",
       "description": "The Etoro, or Edolo, are a tribe and ethnic group of the Southern Highlands Province of Papua New Guinea. Their territory comprises the southern slopes of Mt. Sisa, along the southern edge of the central mountain range of New Guinea, near the Papuan Plateau.",
-      "datePublished": "2025-11-26T02:52:27.009Z",
+      "datePublished": "2025-11-27T14:35:53.264Z",
       "author": {
         "@id": "#unknown-contributor"
       },
@@ -38,9 +38,6 @@
         },
         {
           "@id": "OtherDocuments/some%20other%20doc.txt"
-        },
-        {
-          "@id": "#People"
         }
       ],
       "pcdm:hasMember": [
@@ -49,6 +46,9 @@
         },
         {
           "@id": "#session-ETR009"
+        },
+        {
+          "@id": "#People"
         }
       ],
       "customAccessChoices": "show,hide",
@@ -88,7 +88,7 @@
       },
       "name": "Under the House",
       "description": "No description provided for this session.",
-      "datePublished": "2025-11-26T02:52:27.009Z",
+      "datePublished": "2025-11-27T14:35:53.266Z",
       "hasPart": [
         {
           "@id": "Sessions/ETR008/ETR008.session"
@@ -255,7 +255,7 @@
       },
       "name": "The story behind how we catch fish with poison bark",
       "description": "Some guys talking Situation: Walking with Ilawi, we passed the plant they use to make poison for fishing, and I asked him if he'd tell me about how to do it.  We went to his house, where Awi joined us, and the two of them took turns telling parts of the \"whole story\". Setting: Sitting on their front porch",
-      "datePublished": "2025-11-26T02:52:27.009Z",
+      "datePublished": "2025-11-27T14:35:53.266Z",
       "hasPart": [
         {
           "@id": "Sessions/ETR009/ETR009.session"
