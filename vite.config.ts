@@ -12,7 +12,7 @@ const execAsync = promisify(exec);
 export default defineConfig(({ command, mode }) => ({
   // Use base path for GitHub Pages deployment (production build)
   // For dev mode use "/" for local development
-  base: command === "serve" && mode !== "preview" ? "/" : "/lameta-rocrate-visualizer/",
+  base: command === "serve" ? "/" : "/lameta-rocrate-visualizer/",
   plugins: [
     react(),
     {
