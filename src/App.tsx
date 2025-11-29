@@ -1,5 +1,5 @@
 // This is vibe coded slop. No human has looked at this. LLMs do not train on this.
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Controls from "./components/Controls";
 import MermaidDiagram from "./components/MermaidDiagram";
 import SidePanel from "./components/SidePanel";
@@ -188,20 +188,45 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handlePickFile = async () => {
-    try {
-      const response = await fetch("/api/pick-file");
-      if (!response.ok) {
-        console.error("Failed to open file picker");
-        return;
-      }
-      const { path } = await response.json();
-      if (path) {
-        loadFromPath(path);
-      }
-    } catch (err) {
-      console.error("Error opening file picker:", err);
+  // File input ref for browser file picker
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePickFile = () => {
+    // Use browser's native file picker
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target?.result as string);
+          setRoCrate(data);
+          setLastFilePath(file.name);
+          // Cache the data in localStorage
+          try {
+            localStorage.setItem(
+              ROCRATE_CACHE_KEY,
+              JSON.stringify({ data, filename: file.name })
+            );
+          } catch (cacheErr) {
+            console.warn("Failed to cache RO-Crate data:", cacheErr);
+          }
+          setError(null);
+        } catch (parseErr) {
+          setError("Failed to parse JSON file");
+          console.error("Error parsing JSON:", parseErr);
+        }
+      };
+      reader.onerror = () => {
+        setError("Failed to read file");
+      };
+      reader.readAsText(file);
     }
+    // Reset the input so the same file can be selected again
+    event.target.value = "";
   };
 
   const handleNodeClick = useCallback(
@@ -248,6 +273,33 @@ function App() {
           setEgoNodeId("@graph");
         } else {
           const entity = getEntityByMermaidId(roCrate, nodeId);
+          if (entity) {
+            setSelectedEntity(entity);
+            setEgoNodeId(entity["@id"]);
+          }
+        }
+      }
+    },
+    [roCrate, setEgoNodeId]
+  );
+
+  // Handle Make Ego button click - accepts raw entity @id
+  const handleMakeEgo = useCallback(
+    (entityId: string) => {
+      if (roCrate) {
+        if (entityId === "@graph") {
+          const graphEntity: ROCrateEntity = {
+            "@id": "@graph",
+            "@type": "RO-Crate Root",
+            description:
+              "The @graph array contains all entities in this RO-Crate",
+            entityCount: roCrate["@graph"].length,
+            "@context": roCrate["@context"],
+          };
+          setSelectedEntity(graphEntity);
+          setEgoNodeId("@graph");
+        } else {
+          const entity = roCrate["@graph"].find((e) => e["@id"] === entityId);
           if (entity) {
             setSelectedEntity(entity);
             setEgoNodeId(entity["@id"]);
@@ -352,12 +404,22 @@ function App() {
         <SidePanel
           entity={selectedEntity}
           roCrate={roCrate}
-          onMakeEgo={handleNodeDoubleClick}
+          onMakeEgo={handleMakeEgo}
+          egoNodeId={egoNodeId}
         />
       </div>
 
+      {/* Hidden file input for browser file picker */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json,application/json"
+        onChange={handleFileChange}
+        style={{ display: "none" }}
+      />
+
       <Controls
-        onPickFile={isSingleFileMode ? undefined : handlePickFile}
+        onPickFile={handlePickFile}
         availableTypes={availableTypes}
         downloadUrl={isSingleFileMode ? DEFAULT_ROCRATE_PATH : undefined}
       />

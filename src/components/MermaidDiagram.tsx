@@ -47,6 +47,49 @@ export default function MermaidDiagram({
   const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
   // Track chart to detect actual changes (not just reset-triggered re-renders)
   const lastChartRef = useRef<string>("");
+  // Track selected node for applying after render
+  const selectedNodeIdRef = useRef<string | undefined>(selectedNodeId);
+  selectedNodeIdRef.current = selectedNodeId;
+
+  // Function to apply selection highlighting
+  const applySelectionHighlight = useCallback(() => {
+    if (!containerRef.current) return;
+
+    const container = containerRef.current;
+    const svg = container.querySelector("svg");
+    if (!svg) return;
+
+    const nodes = svg.querySelectorAll(".node");
+    const currentSelectedId = selectedNodeIdRef.current;
+
+    nodes.forEach((node) => {
+      const nodeElement = node as SVGGElement;
+      const nodeId = node
+        .getAttribute("id")
+        ?.replace(/^flowchart-/, "")
+        .split("-")[0];
+
+      if (nodeId === currentSelectedId) {
+        // Add thick border effect for selected node
+        const shapeElements = nodeElement.querySelectorAll(
+          "rect, polygon, circle, ellipse, path, .basic"
+        );
+        shapeElements.forEach((shape) => {
+          const shapeEl = shape as SVGElement;
+          shapeEl.style.setProperty("stroke-width", "4px", "important");
+        });
+      } else {
+        // Reset to default
+        const shapeElements = nodeElement.querySelectorAll(
+          "rect, polygon, circle, ellipse, path, .basic"
+        );
+        shapeElements.forEach((shape) => {
+          const shapeEl = shape as SVGElement;
+          shapeEl.style.removeProperty("stroke-width");
+        });
+      }
+    });
+  }, []);
 
   // Zoom to fit the entire diagram in the viewport
   const zoomToFit = useCallback(() => {
@@ -184,6 +227,7 @@ export default function MermaidDiagram({
           // Reset/center the view after rendering
           setTimeout(() => {
             zoomToFit();
+            applySelectionHighlight();
           }, 50);
         }
       } catch (error) {
@@ -195,51 +239,12 @@ export default function MermaidDiagram({
     };
 
     renderChart();
-  }, [chart, onNodeClick, onNodeDoubleClick, zoomToFit]);
+  }, [chart, onNodeClick, onNodeDoubleClick, zoomToFit, applySelectionHighlight]);
 
   // Highlight selected node with bold border
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const container = containerRef.current;
-    const svg = container.querySelector("svg");
-    if (!svg) return;
-
-    const nodes = svg.querySelectorAll(".node");
-
-    nodes.forEach((node) => {
-      const nodeElement = node as SVGGElement;
-      const nodeId = node
-        .getAttribute("id")
-        ?.replace(/^flowchart-/, "")
-        .split("-")[0];
-
-      if (nodeId === selectedNodeId) {
-        // Add bold border effect using filter and stroke
-        nodeElement.style.filter =
-          "drop-shadow(0 0 8px rgba(25, 118, 210, 0.8))";
-        const shapeElements = nodeElement.querySelectorAll(
-          "rect, polygon, circle, ellipse, path"
-        );
-        shapeElements.forEach((shape) => {
-          const shapeEl = shape as SVGElement;
-          shapeEl.setAttribute("stroke-width", "5");
-          shapeEl.setAttribute("stroke", "#1976d2");
-        });
-      } else {
-        // Reset to default
-        nodeElement.style.filter = "";
-        const shapeElements = nodeElement.querySelectorAll(
-          "rect, polygon, circle, ellipse, path"
-        );
-        shapeElements.forEach((shape) => {
-          const shapeEl = shape as SVGElement;
-          shapeEl.removeAttribute("stroke-width");
-          shapeEl.removeAttribute("stroke");
-        });
-      }
-    });
-  }, [selectedNodeId, chart]);
+    applySelectionHighlight();
+  }, [selectedNodeId, applySelectionHighlight]);
 
   return (
     <div

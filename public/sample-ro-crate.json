@@ -19,7 +19,7 @@
       },
       "name": "Edolo Sample",
       "description": "The Etoro, or Edolo, are a tribe and ethnic group of the Southern Highlands Province of Papua New Guinea. Their territory comprises the southern slopes of Mt. Sisa, along the southern edge of the central mountain range of New Guinea, near the Papuan Plateau.",
-      "datePublished": "2025-11-27T14:35:53.264Z",
+      "datePublished": "2025-11-29T04:08:31.943Z",
       "author": {
         "@id": "#unknown-contributor"
       },
@@ -37,7 +37,16 @@
           "@id": "./hewya.sprj"
         },
         {
-          "@id": "OtherDocuments/some%20other%20doc.txt"
+          "@id": "Sessions/"
+        },
+        {
+          "@id": "DescriptionDocuments/"
+        },
+        {
+          "@id": "OtherDocuments/"
+        },
+        {
+          "@id": "#People"
         }
       ],
       "pcdm:hasMember": [
@@ -46,9 +55,6 @@
         },
         {
           "@id": "#session-ETR009"
-        },
-        {
-          "@id": "#People"
         }
       ],
       "customAccessChoices": "show,hide",
@@ -88,12 +94,7 @@
       },
       "name": "Under the House",
       "description": "No description provided for this session.",
-      "datePublished": "2025-11-27T14:35:53.266Z",
-      "hasPart": [
-        {
-          "@id": "Sessions/ETR008/ETR008.session"
-        }
-      ],
+      "datePublished": "2025-11-29T04:08:31.945Z",
       "collectionEventType": "https://w3id.org/ldac/terms#Session",
       "publisher": {
         "@id": "#publisher-paradisec"
@@ -109,6 +110,9 @@
       },
       "pcdm:memberOf": {
         "@id": "./"
+      },
+      "subjectOf": {
+        "@id": "Sessions/ETR008/"
       },
       "ldac:subjectLanguage": [
         {
@@ -147,6 +151,9 @@
       "name": "Awi_Heole.person",
       "about": {
         "@id": "#Awi_Heole"
+      },
+      "isPartOf": {
+        "@id": "#Awi_Heole-files"
       }
     },
     {
@@ -159,6 +166,9 @@
       "name": "Awi_Heole_Photo.JPG",
       "about": {
         "@id": "#Awi_Heole"
+      },
+      "isPartOf": {
+        "@id": "#Awi_Heole-files"
       }
     },
     {
@@ -171,6 +181,9 @@
       "name": "Awi_Heole_Consent.JPG",
       "about": {
         "@id": "#Awi_Heole"
+      },
+      "isPartOf": {
+        "@id": "#Awi_Heole-files"
       }
     },
     {
@@ -231,7 +244,7 @@
         "@id": "#license-paradisec-open"
       },
       "isPartOf": {
-        "@id": "#session-ETR008"
+        "@id": "Sessions/ETR008/"
       }
     },
     {
@@ -255,33 +268,7 @@
       },
       "name": "The story behind how we catch fish with poison bark",
       "description": "Some guys talking Situation: Walking with Ilawi, we passed the plant they use to make poison for fishing, and I asked him if he'd tell me about how to do it.  We went to his house, where Awi joined us, and the two of them took turns telling parts of the \"whole story\". Setting: Sitting on their front porch",
-      "datePublished": "2025-11-27T14:35:53.266Z",
-      "hasPart": [
-        {
-          "@id": "Sessions/ETR009/ETR009.session"
-        },
-        {
-          "@id": "Sessions/ETR009/SceneHouse.JPG"
-        },
-        {
-          "@id": "Sessions/ETR009/SceneAroundCamera.JPG"
-        },
-        {
-          "@id": "Sessions/ETR009/ETR009_XDoc.docx"
-        },
-        {
-          "@id": "Sessions/ETR009/ETR009_Tiny_StandardAudio.wav.annotations.eaf"
-        },
-        {
-          "@id": "Sessions/ETR009/ETR009_Tiny.mp4"
-        },
-        {
-          "@id": "Sessions/ETR009/ETR009_Careful.mp3"
-        },
-        {
-          "@id": "Sessions/ETR009/ETR009_AText.txt"
-        }
-      ],
+      "datePublished": "2025-11-29T04:08:31.946Z",
       "collectionEventType": "https://w3id.org/ldac/terms#Session",
       "publisher": {
         "@id": "#publisher-paradisec"
@@ -297,6 +284,9 @@
       },
       "pcdm:memberOf": {
         "@id": "./"
+      },
+      "subjectOf": {
+        "@id": "Sessions/ETR009/"
       },
       "startDate": "2010-06-06",
       "location": {
@@ -351,6 +341,9 @@
       "name": "Ilawi_Amosa.person",
       "about": {
         "@id": "#Ilawi_Amosa"
+      },
+      "isPartOf": {
+        "@id": "#Ilawi_Amosa-files"
       }
     },
     {
@@ -363,6 +356,9 @@
       "name": "Ilawi_Amosa_Photo.jpg",
       "about": {
         "@id": "#Ilawi_Amosa"
+      },
+      "isPartOf": {
+        "@id": "#Ilawi_Amosa-files"
       }
     },
     {
@@ -375,6 +371,9 @@
       "name": "Ilawi_Amosa_Consent.JPG",
       "about": {
         "@id": "#Ilawi_Amosa"
+      },
+      "isPartOf": {
+        "@id": "#Ilawi_Amosa-files"
       }
     },
     {
@@ -422,7 +421,7 @@
         "@id": "#license-paradisec-open"
       },
       "isPartOf": {
-        "@id": "#session-ETR009"
+        "@id": "Sessions/ETR009/"
       }
     },
     {
@@ -434,7 +433,7 @@
       "encodingFormat": "image/jpeg",
       "name": "SceneHouse.JPG",
       "isPartOf": {
-        "@id": "#session-ETR009"
+        "@id": "Sessions/ETR009/"
       }
     },
     {
@@ -446,7 +445,7 @@
       "encodingFormat": "image/jpeg",
       "name": "SceneAroundCamera.JPG",
       "isPartOf": {
-        "@id": "#session-ETR009"
+        "@id": "Sessions/ETR009/"
       }
     },
     {
@@ -458,7 +457,7 @@
       "encodingFormat": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "name": "ETR009_XDoc.docx",
       "isPartOf": {
-        "@id": "#session-ETR009"
+        "@id": "Sessions/ETR009/"
       }
     },
     {
@@ -470,7 +469,7 @@
       "encodingFormat": "text/x-eaf+xml",
       "name": "ETR009_Tiny_StandardAudio.wav.annotations.eaf",
       "isPartOf": {
-        "@id": "#session-ETR009"
+        "@id": "Sessions/ETR009/"
       }
     },
     {
@@ -482,7 +481,7 @@
       "encodingFormat": "video/mp4",
       "name": "ETR009_Tiny.mp4",
       "isPartOf": {
-        "@id": "#session-ETR009"
+        "@id": "Sessions/ETR009/"
       }
     },
     {
@@ -494,7 +493,7 @@
       "encodingFormat": "audio/mpeg",
       "name": "ETR009_Careful.mp3",
       "isPartOf": {
-        "@id": "#session-ETR009"
+        "@id": "Sessions/ETR009/"
       }
     },
     {
@@ -506,7 +505,88 @@
       "encodingFormat": "text/plain",
       "name": "ETR009_AText.txt",
       "isPartOf": {
+        "@id": "Sessions/ETR009/"
+      }
+    },
+    {
+      "@id": "Sessions/",
+      "@type": "Dataset",
+      "name": "Sessions",
+      "description": "Directory of sessions in this collection.",
+      "hasPart": [
+        {
+          "@id": "Sessions/ETR008/"
+        },
+        {
+          "@id": "Sessions/ETR009/"
+        }
+      ],
+      "isPartOf": {
+        "@id": "./"
+      },
+      "license": {
+        "@id": "#collection-license"
+      }
+    },
+    {
+      "@id": "Sessions/ETR008/",
+      "@type": "Dataset",
+      "name": "Session ETR008",
+      "description": "Files for session ETR008.",
+      "hasPart": [
+        {
+          "@id": "Sessions/ETR008/ETR008.session"
+        }
+      ],
+      "isPartOf": {
+        "@id": "Sessions/"
+      },
+      "about": {
+        "@id": "#session-ETR008"
+      },
+      "license": {
+        "@id": "#collection-license"
+      }
+    },
+    {
+      "@id": "Sessions/ETR009/",
+      "@type": "Dataset",
+      "name": "Session ETR009",
+      "description": "Files for session ETR009.",
+      "hasPart": [
+        {
+          "@id": "Sessions/ETR009/ETR009.session"
+        },
+        {
+          "@id": "Sessions/ETR009/SceneHouse.JPG"
+        },
+        {
+          "@id": "Sessions/ETR009/SceneAroundCamera.JPG"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_XDoc.docx"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_Tiny_StandardAudio.wav.annotations.eaf"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_Tiny.mp4"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_Careful.mp3"
+        },
+        {
+          "@id": "Sessions/ETR009/ETR009_AText.txt"
+        }
+      ],
+      "isPartOf": {
+        "@id": "Sessions/"
+      },
+      "about": {
         "@id": "#session-ETR009"
+      },
+      "license": {
+        "@id": "#collection-license"
       }
     },
     {
@@ -524,25 +604,9 @@
       }
     },
     {
-      "@id": "ldac:AuthorizedAccess",
-      "@type": "DefinedTerm",
-      "name": "Authorized Access",
-      "description": "Data covered by this license requires explicit authorization for access.",
-      "inDefinedTermSet": {
-        "@id": "ldac:AccessTypes"
-      }
-    },
-    {
-      "@id": "ldac:DataReuseLicense",
-      "@type": "Class",
-      "subClassOf": {
-        "@id": "http://schema.org/CreativeWork"
-      },
-      "description": "A license document, setting out terms for reuse of data."
-    },
-    {
       "@id": "#license-paradisec-open",
       "@type": "ldac:DataReuseLicense",
+      "name": "PARADISEC Open License",
       "ldac:access": {
         "@id": "ldac:OpenAccess"
       },
@@ -600,14 +664,18 @@
         "@id": "#collection-license"
       },
       "isPartOf": {
-        "@id": "#descriptionDocuments"
+        "@id": "DescriptionDocuments/"
       }
     },
     {
       "@id": "#descriptionDocuments",
       "@type": "ldac:CollectionProtocol",
       "name": "Edolo Sample collection protocol",
-      "datePublished": "2023-04-07T14:35:25.904Z",
+      "description": "The Etoro, or Edolo, are a tribe and ethnic group of the Southern Highlands Province of Papua New Guinea. Their territory comprises the southern slopes of Mt. Sisa, along the southern edge of the central mountain range of New Guinea, near the Papuan Plateau.",
+      "author": {
+        "@id": "#unknown-contributor"
+      },
+      "datePublished": "2025-11-20T15:58:01.302Z",
       "hasPart": [
         {
           "@id": "DescriptionDocuments/pretend%20description.txt"
@@ -629,7 +697,41 @@
         "@id": "#collection-license"
       },
       "isPartOf": {
+        "@id": "OtherDocuments/"
+      }
+    },
+    {
+      "@id": "DescriptionDocuments/",
+      "@type": "Dataset",
+      "name": "Description Documents",
+      "description": "Documents describing the collection methodology and protocols.",
+      "hasPart": [
+        {
+          "@id": "DescriptionDocuments/pretend%20description.txt"
+        }
+      ],
+      "isPartOf": {
         "@id": "./"
+      },
+      "license": {
+        "@id": "#collection-license"
+      }
+    },
+    {
+      "@id": "OtherDocuments/",
+      "@type": "Dataset",
+      "name": "Other Documents",
+      "description": "Additional documents associated with this collection.",
+      "hasPart": [
+        {
+          "@id": "OtherDocuments/some%20other%20doc.txt"
+        }
+      ],
+      "isPartOf": {
+        "@id": "./"
+      },
+      "license": {
+        "@id": "#collection-license"
       }
     },
     {
@@ -639,14 +741,72 @@
       "description": "Directory of people associated with this collection.",
       "hasPart": [
         {
-          "@id": "#Awi_Heole"
+          "@id": "#Awi_Heole-files"
         },
         {
-          "@id": "#Ilawi_Amosa"
+          "@id": "#contributor-Hatton"
+        },
+        {
+          "@id": "#Ilawi_Amosa-files"
+        },
+        {
+          "@id": "#unknown-contributor"
         }
       ],
       "isPartOf": {
         "@id": "./"
+      },
+      "license": {
+        "@id": "#collection-license"
+      }
+    },
+    {
+      "@id": "#Awi_Heole-files",
+      "@type": "Dataset",
+      "name": "Awi_Heole files",
+      "description": "Files associated with Awi_Heole.",
+      "hasPart": [
+        {
+          "@id": "#Awi_Heole"
+        },
+        {
+          "@id": "People/Awi_Heole/Awi_Heole.person"
+        },
+        {
+          "@id": "People/Awi_Heole/Awi_Heole_Photo.JPG"
+        },
+        {
+          "@id": "People/Awi_Heole/Awi_Heole_Consent.JPG"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#People"
+      },
+      "license": {
+        "@id": "#collection-license"
+      }
+    },
+    {
+      "@id": "#Ilawi_Amosa-files",
+      "@type": "Dataset",
+      "name": "Ilawi_Amosa files",
+      "description": "Files associated with Ilawi_Amosa.",
+      "hasPart": [
+        {
+          "@id": "#Ilawi_Amosa"
+        },
+        {
+          "@id": "People/Ilawi_Amosa/Ilawi_Amosa.person"
+        },
+        {
+          "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Photo.jpg"
+        },
+        {
+          "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Consent.JPG"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#People"
       },
       "license": {
         "@id": "#collection-license"

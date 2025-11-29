@@ -59,6 +59,7 @@ interface SidePanelProps {
   entity: ROCrateEntity | null;
   roCrate: ROCrate | null;
   onMakeEgo?: (entityId: string) => void;
+  egoNodeId?: string | null;
 }
 
 // Find all entities that reference the given entity
@@ -106,9 +107,12 @@ export default function SidePanel({
   entity,
   roCrate,
   onMakeEgo,
+  egoNodeId,
 }: SidePanelProps) {
   const references =
     entity && roCrate ? findReferences(roCrate, entity["@id"]) : [];
+
+  const isAlreadyEgo = entity && egoNodeId === entity["@id"];
 
   const handleMakeEgo = () => {
     if (entity && onMakeEgo) {
@@ -126,7 +130,12 @@ export default function SidePanel({
           {entity && onMakeEgo && (
             <button
               onClick={handleMakeEgo}
-              className="px-3 py-1 bg-[#d2691e] text-white rounded hover:bg-[#b8581a] transition-colors font-medium text-sm"
+              disabled={isAlreadyEgo}
+              className={`px-3 py-1 rounded transition-colors font-medium text-sm ${
+                isAlreadyEgo
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed opacity-50"
+                  : "bg-[#d2691e] text-white hover:bg-[#b8581a]"
+              }`}
             >
               Make Ego
             </button>

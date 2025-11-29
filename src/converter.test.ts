@@ -286,24 +286,24 @@ describe("convertToMermaid - Neighborhood Mode", () => {
     expect(result).toContain("#Ilawi_Amosa");
     expect(result).toContain("#contributor-Hatton");
 
-    // Should have participant edge (namespace stripped)
-    expect(result).toContain("|participant|");
+    // Should have participant edge (with namespace prefix preserved)
+    expect(result).toContain("|ldac:participant|");
 
-    // Should have speaker edge (namespace stripped)
-    expect(result).toContain("|speaker|");
+    // Should have speaker edge (with namespace prefix preserved)
+    expect(result).toContain("|ldac:speaker|");
 
-    // Should have recorder edge (namespace stripped)
-    expect(result).toContain("|recorder|");
+    // Should have recorder edge (with namespace prefix preserved)
+    expect(result).toContain("|ldac:recorder|");
 
     // Verify there are 4 relationships total:
     // 2 participant (one to each person), 1 speaker, 1 recorder
-    const participantMatches = result.match(/\|participant\|/g) || [];
+    const participantMatches = result.match(/\|ldac:participant\|/g) || [];
     expect(participantMatches.length).toBe(2);
 
-    const speakerMatches = result.match(/\|speaker\|/g) || [];
+    const speakerMatches = result.match(/\|ldac:speaker\|/g) || [];
     expect(speakerMatches.length).toBe(1);
 
-    const recorderMatches = result.match(/\|recorder\|/g) || [];
+    const recorderMatches = result.match(/\|ldac:recorder\|/g) || [];
     expect(recorderMatches.length).toBe(1);
   });
 });

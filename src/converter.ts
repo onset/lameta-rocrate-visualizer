@@ -150,10 +150,10 @@ function processAllRelationships(
     if (skipProps.has(prop)) return;
 
     // Skip inverse links if showInverseLinks is false
-    const displayName = prop.replace(/^[^:]+:/, "");
+    const propNameWithoutPrefix = prop.replace(/^[^:]+:/, "");
     if (
       !showInverseLinks &&
-      (INVERSE_LINK_TYPES as readonly string[]).includes(displayName)
+      (INVERSE_LINK_TYPES as readonly string[]).includes(propNameWithoutPrefix)
     ) {
       return;
     }
@@ -163,11 +163,10 @@ function processAllRelationships(
     if (value && typeof value === "object") {
       if (Array.isArray(value) && value.length > 0 && value[0]?.["@id"]) {
         // Array of references
-        const displayName = prop.replace(/^[^:]+:/, ""); // Remove namespace prefix
         const linkStyle = prop === "hasPart" ? "-->" : "-.->";
         processRelationship(
           sourceId,
-          displayName,
+          prop,
           value,
           entityMap,
           processed,
@@ -180,11 +179,10 @@ function processAllRelationships(
         );
       } else if (value["@id"]) {
         // Single reference
-        const displayName = prop.replace(/^[^:]+:/, ""); // Remove namespace prefix
         const linkStyle = prop === "hasPart" ? "-->" : "-.->";
         processRelationship(
           sourceId,
-          displayName,
+          prop,
           value,
           entityMap,
           processed,
@@ -485,10 +483,15 @@ export function convertToMermaid(
     return true;
   };
 
-  // Add the @graph root node (the true root of the RO-Crate structure)
-  lines.push('  graph_root["@graph<br/><i>RO-Crate Root</i>"]');
-  lines.push(getNodeStyle("graph_root", "graphRoot"));
-  processed.add("@graph");
+  // Only show @graph root node when there's no ego selected, or when ego is "./" (root dataset)
+  const shouldShowGraphRoot = !selectedEntityId || selectedEntityId === "./";
+
+  if (shouldShowGraphRoot) {
+    // Add the @graph root node (the true root of the RO-Crate structure)
+    lines.push('  graph_root["@graph<br/><i>RO-Crate Root</i>"]');
+    lines.push(getNodeStyle("graph_root", "graphRoot"));
+    processed.add("@graph");
+  }
 
   // Find root dataset
   const rootDataset = entities.find(
@@ -507,9 +510,12 @@ export function convertToMermaid(
     );
     processed.add(rootDataset["@id"]);
     lines.push(getNodeStyle(rootId, "dataset"));
-    // Connect @graph to root dataset
-    lines.push(`  graph_root --> ${rootId}`);
-    edgeRelationships.push("_graphRoot"); // Track this edge for linkStyle indexing
+    
+    // Connect @graph to root dataset only when showing @graph root
+    if (shouldShowGraphRoot) {
+      lines.push(`  graph_root --> ${rootId}`);
+      edgeRelationships.push("_graphRoot"); // Track this edge for linkStyle indexing
+    }
 
     // Process all relationships automatically (including hasPart, contributor, etc.)
     if (rootId) {
@@ -591,11 +597,11 @@ export function convertToMermaid(
       Object.keys(selectedEntity).forEach((prop) => {
         if (prop.startsWith("@")) return;
 
-        const displayName = prop.replace(/^[^:]+:/, "");
+        const propNameWithoutPrefix = prop.replace(/^[^:]+:/, "");
         // Skip inverse links if showInverseLinks is false
         if (
           !showInverseLinks &&
-          (INVERSE_LINK_TYPES as readonly string[]).includes(displayName)
+          (INVERSE_LINK_TYPES as readonly string[]).includes(propNameWithoutPrefix)
         ) {
           return;
         }
@@ -629,7 +635,7 @@ export function convertToMermaid(
                 }
 
                 // Add edge (using addEdge to avoid duplicates)
-                addEdge(sourceId, targetId, displayName, linkStyle);
+                addEdge(sourceId, targetId, prop, linkStyle);
               }
             }
           });
@@ -648,11 +654,11 @@ export function convertToMermaid(
         Object.keys(entity).forEach((prop) => {
           if (prop.startsWith("@")) return;
 
-          const displayName = prop.replace(/^[^:]+:/, "");
+          const propNameWithoutPrefix = prop.replace(/^[^:]+:/, "");
           // Skip inverse links if showInverseLinks is false
           if (
             !showInverseLinks &&
-            (INVERSE_LINK_TYPES as readonly string[]).includes(displayName)
+            (INVERSE_LINK_TYPES as readonly string[]).includes(propNameWithoutPrefix)
           ) {
             return;
           }
@@ -684,7 +690,7 @@ export function convertToMermaid(
                 }
 
                 // Add edge (using addEdge to avoid duplicates)
-                addEdge(sourceId, targetId, displayName, linkStyle);
+                addEdge(sourceId, targetId, prop, linkStyle);
               }
             });
           }
@@ -696,10 +702,12 @@ export function convertToMermaid(
   // Add linkStyle directives for colored arrows
   edgeRelationships.forEach((rel, idx) => {
     // Make inverse relationship labels light gray (both arrow and text)
-    const isInverseRelationship = (
-      INVERSE_LINK_TYPES as readonly string[]
-    ).includes(rel);
-    const color = isInverseRelationship ? "#999" : getRelationshipColor(rel);
+    // Check both the full property name and the name without prefix
+    const relWithoutPrefix = rel.replace(/^[^:]+:/, "");
+    const isInverseRelationship =
+      (INVERSE_LINK_TYPES as readonly string[]).includes(rel) ||
+      (INVERSE_LINK_TYPES as readonly string[]).includes(relWithoutPrefix);
+    const color = isInverseRelationship ? "#999" : getRelationshipColor(relWithoutPrefix);
     // Make label text match arrow color
     lines.push(
       `  linkStyle ${idx} stroke:${color},stroke-width:2px,color:${color}`
