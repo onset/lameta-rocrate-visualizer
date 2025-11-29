@@ -112,7 +112,7 @@ export default function SidePanel({
   const references =
     entity && roCrate ? findReferences(roCrate, entity["@id"]) : [];
 
-  const isAlreadyEgo = entity && egoNodeId === entity["@id"];
+  const isAlreadyEgo = !!(entity && egoNodeId === entity["@id"]);
 
   const handleMakeEgo = () => {
     if (entity && onMakeEgo) {
