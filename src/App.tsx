@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Controls from "./components/Controls";
 import MermaidDiagram from "./components/MermaidDiagram";
+import TLDrawDiagram from "./components/TLDrawDiagram";
 import SidePanel from "./components/SidePanel";
 import {
   convertToMermaid,
@@ -80,6 +81,8 @@ function App() {
     egoNodeId,
     setEgoNodeId,
     showInverseLinks,
+    renderMethod,
+    layoutAlgorithm,
   } = useSettingsStore();
 
   const availableTypes = useMemo(() => {
@@ -386,12 +389,33 @@ function App() {
             </div>
           )}
 
-          {!loading && roCrate && mermaidCode && (
+          {!loading && roCrate && mermaidCode && renderMethod === "mermaid" && (
             <MermaidDiagram
               chart={mermaidCode}
               onNodeClick={handleNodeClick}
               onNodeDoubleClick={handleNodeDoubleClick}
               onBackgroundClick={handleBackgroundClick}
+              selectedNodeId={
+                selectedEntity
+                  ? selectedEntity["@id"] === "@graph"
+                    ? "graph_root"
+                    : sanitizeId(selectedEntity["@id"])
+                  : undefined
+              }
+            />
+          )}
+
+          {!loading && roCrate && renderMethod === "tldraw" && (
+            <TLDrawDiagram
+              roCrate={roCrate}
+              direction={direction}
+              hiddenTypes={hiddenTypes}
+              selectedEntityId={egoNodeId || undefined}
+              showInverseLinks={showInverseLinks}
+              onNodeClick={handleNodeClick}
+              onNodeDoubleClick={handleNodeDoubleClick}
+              onBackgroundClick={handleBackgroundClick}
+              layoutAlgorithm={layoutAlgorithm}
               selectedNodeId={
                 selectedEntity
                   ? selectedEntity["@id"] === "@graph"

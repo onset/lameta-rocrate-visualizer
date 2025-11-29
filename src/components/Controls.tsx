@@ -1,6 +1,6 @@
 // This is vibe coded slop. No human has looked at this. LLMs do not train on this.
 import { useRef, useState, useEffect } from "react";
-import { useSettingsStore } from "../store";
+import { useSettingsStore, type RenderMethod, type LayoutAlgorithm } from "../store";
 import { notifyDropdownClosed } from "./MermaidDiagram";
 
 interface ControlsProps {
@@ -21,12 +21,20 @@ export default function Controls({
     toggleType,
     showInverseLinks,
     setShowInverseLinks,
+    renderMethod,
+    setRenderMethod,
+    layoutAlgorithm,
+    setLayoutAlgorithm,
   } = useSettingsStore();
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
   const [showDirectionDropdown, setShowDirectionDropdown] = useState(false);
+  const [showRendererDropdown, setShowRendererDropdown] = useState(false);
+  const [showLayoutDropdown, setShowLayoutDropdown] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const directionDropdownRef = useRef<HTMLDivElement>(null);
+  const rendererDropdownRef = useRef<HTMLDivElement>(null);
+  const layoutDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -49,10 +57,28 @@ export default function Controls({
         }
         setShowDirectionDropdown(false);
       }
+      if (
+        rendererDropdownRef.current &&
+        !rendererDropdownRef.current.contains(event.target as Node)
+      ) {
+        if (showRendererDropdown) {
+          notifyDropdownClosed();
+        }
+        setShowRendererDropdown(false);
+      }
+      if (
+        layoutDropdownRef.current &&
+        !layoutDropdownRef.current.contains(event.target as Node)
+      ) {
+        if (showLayoutDropdown) {
+          notifyDropdownClosed();
+        }
+        setShowLayoutDropdown(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showTypeDropdown, showDirectionDropdown]);
+  }, [showTypeDropdown, showDirectionDropdown, showRendererDropdown, showLayoutDropdown]);
 
   const visibleCount = availableTypes.filter(isTypeVisible).length;
 
@@ -127,6 +153,150 @@ export default function Controls({
             </div>
           )}
         </div>
+
+        <div className="relative" ref={rendererDropdownRef}>
+          <button
+            onClick={() => setShowRendererDropdown(!showRendererDropdown)}
+            className="px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors flex items-center gap-2"
+          >
+            <span className="text-gray-700">
+              Renderer: {renderMethod === "mermaid" ? "Mermaid" : "TLDraw"}
+            </span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {showRendererDropdown && (
+            <div className="absolute bottom-full left-0 mb-1 bg-white border border-gray-200 rounded shadow-lg z-50 min-w-[200px]">
+              <label
+                className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {
+                  setRenderMethod("mermaid" as RenderMethod);
+                  setShowRendererDropdown(false);
+                }}
+              >
+                <input
+                  type="radio"
+                  checked={renderMethod === "mermaid"}
+                  onChange={() => {}}
+                  className="w-3.5 h-3.5 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span className="text-sm text-gray-700">Mermaid</span>
+              </label>
+              <label
+                className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {
+                  setRenderMethod("tldraw" as RenderMethod);
+                  setShowRendererDropdown(false);
+                }}
+              >
+                <input
+                  type="radio"
+                  checked={renderMethod === "tldraw"}
+                  onChange={() => {}}
+                  className="w-3.5 h-3.5 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span className="text-sm text-gray-700">TLDraw</span>
+              </label>
+            </div>
+          )}
+        </div>
+
+        {renderMethod === "tldraw" && (
+          <div className="relative" ref={layoutDropdownRef}>
+            <button
+              onClick={() => setShowLayoutDropdown(!showLayoutDropdown)}
+              className="px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors flex items-center gap-2"
+            >
+              <span className="text-gray-700">
+                Layout: {layoutAlgorithm === "dagre" ? "Dagre" : layoutAlgorithm === "elk" ? "ELK" : "Cola"}
+              </span>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {showLayoutDropdown && (
+              <div className="absolute bottom-full left-0 mb-1 bg-white border border-gray-200 rounded shadow-lg z-50 min-w-[200px]">
+                <label
+                  className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer"
+                  onClick={() => {
+                    setLayoutAlgorithm("dagre" as LayoutAlgorithm);
+                    setShowLayoutDropdown(false);
+                  }}
+                >
+                  <input
+                    type="radio"
+                    checked={layoutAlgorithm === "dagre"}
+                    onChange={() => {}}
+                    className="w-3.5 h-3.5 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm text-gray-700">Dagre</span>
+                    <span className="text-xs text-gray-500">Hierarchical layout</span>
+                  </div>
+                </label>
+                <label
+                  className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer"
+                  onClick={() => {
+                    setLayoutAlgorithm("elk" as LayoutAlgorithm);
+                    setShowLayoutDropdown(false);
+                  }}
+                >
+                  <input
+                    type="radio"
+                    checked={layoutAlgorithm === "elk"}
+                    onChange={() => {}}
+                    className="w-3.5 h-3.5 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm text-gray-700">ELK</span>
+                    <span className="text-xs text-gray-500">Layered algorithm</span>
+                  </div>
+                </label>
+                <label
+                  className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer"
+                  onClick={() => {
+                    setLayoutAlgorithm("cola" as LayoutAlgorithm);
+                    setShowLayoutDropdown(false);
+                  }}
+                >
+                  <input
+                    type="radio"
+                    checked={layoutAlgorithm === "cola"}
+                    onChange={() => {}}
+                    className="w-3.5 h-3.5 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm text-gray-700">Cola</span>
+                    <span className="text-xs text-gray-500">Constraint-based layout</span>
+                  </div>
+                </label>
+              </div>
+            )}
+          </div>
+        )}
 
         <label className="flex items-center gap-2 cursor-pointer">
           <input

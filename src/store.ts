@@ -2,18 +2,25 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+export type RenderMethod = "mermaid" | "tldraw";
+export type LayoutAlgorithm = "dagre" | "elk" | "cola";
+
 interface SettingsStore {
   direction: "LR" | "TB";
   lastFilePath: string;
   hiddenTypes: Set<string>;
   egoNodeId: string | null;
   showInverseLinks: boolean;
+  renderMethod: RenderMethod;
+  layoutAlgorithm: LayoutAlgorithm;
   setDirection: (direction: "LR" | "TB") => void;
   setLastFilePath: (path: string) => void;
   toggleType: (type: string) => void;
   isTypeVisible: (type: string) => boolean;
   setEgoNodeId: (id: string | null) => void;
   setShowInverseLinks: (show: boolean) => void;
+  setRenderMethod: (method: RenderMethod) => void;
+  setLayoutAlgorithm: (algorithm: LayoutAlgorithm) => void;
 }
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -24,6 +31,8 @@ export const useSettingsStore = create<SettingsStore>()(
       hiddenTypes: new Set<string>(),
       egoNodeId: null,
       showInverseLinks: false,
+      renderMethod: "mermaid" as RenderMethod,
+      layoutAlgorithm: "dagre" as LayoutAlgorithm,
 
       setDirection: (direction) => set({ direction }),
 
@@ -45,7 +54,9 @@ export const useSettingsStore = create<SettingsStore>()(
       setEgoNodeId: (id) => set({ egoNodeId: id }),
 
       setShowInverseLinks: (show) => set({ showInverseLinks: show }),
-    }),
+
+      setRenderMethod: (method) => set({ renderMethod: method }),
+      setLayoutAlgorithm: (algorithm) => set({ layoutAlgorithm: algorithm }),    }),
     {
       name: "rocrate-visualizer-settings",
       partialize: (state) => ({
@@ -53,6 +64,8 @@ export const useSettingsStore = create<SettingsStore>()(
         lastFilePath: state.lastFilePath,
         hiddenTypes: Array.from(state.hiddenTypes),
         showInverseLinks: state.showInverseLinks,
+        renderMethod: state.renderMethod,
+        layoutAlgorithm: state.layoutAlgorithm,
       }),
       merge: (persistedState: unknown, currentState) => ({
         ...currentState,
