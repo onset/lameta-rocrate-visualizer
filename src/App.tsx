@@ -70,6 +70,7 @@ function App() {
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loadedFileName, setLoadedFileName] = useState<string | null>(null);
 
   const {
     direction,
@@ -205,6 +206,7 @@ function App() {
           const data = JSON.parse(e.target?.result as string);
           setRoCrate(data);
           setLastFilePath(file.name);
+          setLoadedFileName(file.name);
           // Cache the data in localStorage
           try {
             localStorage.setItem(
@@ -283,7 +285,7 @@ function App() {
     [roCrate, setEgoNodeId]
   );
 
-  // Handle Make Ego button click - accepts raw entity @id
+  // Handle Focus button click - accepts raw entity @id
   const handleMakeEgo = useCallback(
     (entityId: string) => {
       if (roCrate) {
@@ -344,7 +346,7 @@ function App() {
                 </span>
               </div>
             )
-          : lastFilePath && (
+          : (loadedFileName || lastFilePath) && (
               <div
                 className={`text-sm text-gray-700 mt-1 transition-colors ${
                   lastFilePath.includes("/") || lastFilePath.includes("\\")
@@ -358,7 +360,7 @@ function App() {
                     : ""
                 }
               >
-                {lastFilePath}
+                {loadedFileName || lastFilePath}
               </div>
             )}
       </header>

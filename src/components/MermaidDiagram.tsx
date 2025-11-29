@@ -34,6 +34,15 @@ mermaid.initialize({
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 5;
 
+// Track the last time a dropdown/popover was closed to prevent accidental background clicks
+let lastDropdownCloseTime = 0;
+const DROPDOWN_CLOSE_DELAY = 300; // ms to wait after dropdown close before allowing background clicks
+
+// Called by Controls when a dropdown closes
+export function notifyDropdownClosed() {
+  lastDropdownCloseTime = Date.now();
+}
+
 export default function MermaidDiagram({
   chart,
   onNodeClick,
@@ -138,13 +147,20 @@ export default function MermaidDiagram({
     onBackgroundClick?.();
   }, [onBackgroundClick, zoomToFit]);
 
-  // Handle clicks on the background (not on nodes)
-  const handleWrapperClick = useCallback(
-    (e: React.MouseEvent) => {
-      // Only trigger if clicking directly on the wrapper or SVG background, not on nodes
+  // Handle clicks on the SVG background (not on nodes or other interactive elements)
+  const handleSvgClick = useCallback(
+    (e: MouseEvent) => {
+      // Don't trigger background click if a dropdown was just closed
+      if (Date.now() - lastDropdownCloseTime < DROPDOWN_CLOSE_DELAY) {
+        return;
+      }
+
       const target = e.target as HTMLElement;
       const isNode = target.closest(".node");
-      if (!isNode && onBackgroundClick) {
+      // Only trigger background click if clicking directly on SVG or its background elements
+      const isSvgBackground =
+        target.tagName === "svg" || (target.tagName === "g" && !isNode);
+      if (isSvgBackground && onBackgroundClick) {
         onBackgroundClick();
       }
     },
@@ -224,6 +240,11 @@ export default function MermaidDiagram({
             });
           }
 
+          // Add click handler to SVG background for clearing selection
+          if (onBackgroundClick && svgElement) {
+            svgElement.addEventListener("click", handleSvgClick);
+          }
+
           // Reset/center the view after rendering
           setTimeout(() => {
             zoomToFit();
@@ -239,7 +260,15 @@ export default function MermaidDiagram({
     };
 
     renderChart();
-  }, [chart, onNodeClick, onNodeDoubleClick, zoomToFit, applySelectionHighlight]);
+  }, [
+    chart,
+    onNodeClick,
+    onNodeDoubleClick,
+    onBackgroundClick,
+    zoomToFit,
+    applySelectionHighlight,
+    handleSvgClick,
+  ]);
 
   // Highlight selected node with bold border
   useEffect(() => {
@@ -250,7 +279,6 @@ export default function MermaidDiagram({
     <div
       ref={wrapperRef}
       className="relative w-full h-full bg-white overflow-hidden"
-      onClick={handleWrapperClick}
     >
       <TransformWrapper
         initialScale={1}

@@ -1,6 +1,7 @@
 // This is vibe coded slop. No human has looked at this. LLMs do not train on this.
 import { useRef, useState, useEffect } from "react";
 import { useSettingsStore } from "../store";
+import { notifyDropdownClosed } from "./MermaidDiagram";
 
 interface ControlsProps {
   onPickFile?: () => void;
@@ -22,8 +23,10 @@ export default function Controls({
     setShowInverseLinks,
   } = useSettingsStore();
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
+  const [showDirectionDropdown, setShowDirectionDropdown] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const directionDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -32,12 +35,24 @@ export default function Controls({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
+        if (showTypeDropdown) {
+          notifyDropdownClosed();
+        }
         setShowTypeDropdown(false);
+      }
+      if (
+        directionDropdownRef.current &&
+        !directionDropdownRef.current.contains(event.target as Node)
+      ) {
+        if (showDirectionDropdown) {
+          notifyDropdownClosed();
+        }
+        setShowDirectionDropdown(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [showTypeDropdown, showDirectionDropdown]);
 
   const visibleCount = availableTypes.filter(isTypeVisible).length;
 
@@ -53,16 +68,64 @@ export default function Controls({
           </button>
         )}
 
-        <div className="flex items-center gap-2">
-          <label className="text-gray-600">Direction:</label>
-          <select
-            value={direction}
-            onChange={(e) => setDirection(e.target.value as "LR" | "TB")}
-            className="px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        <div className="relative" ref={directionDropdownRef}>
+          <button
+            onClick={() => setShowDirectionDropdown(!showDirectionDropdown)}
+            className="px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors flex items-center gap-2"
           >
-            <option value="LR">Left to Right</option>
-            <option value="TB">Top to Bottom</option>
-          </select>
+            <span className="text-gray-700">
+              Direction:{" "}
+              {direction === "LR" ? "Left to Right" : "Top to Bottom"}
+            </span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {showDirectionDropdown && (
+            <div className="absolute bottom-full left-0 mb-1 bg-white border border-gray-200 rounded shadow-lg z-50 min-w-[200px]">
+              <label
+                className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {
+                  setDirection("LR");
+                  setShowDirectionDropdown(false);
+                }}
+              >
+                <input
+                  type="radio"
+                  checked={direction === "LR"}
+                  onChange={() => {}}
+                  className="w-3.5 h-3.5 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span className="text-sm text-gray-700">Left to Right</span>
+              </label>
+              <label
+                className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {
+                  setDirection("TB");
+                  setShowDirectionDropdown(false);
+                }}
+              >
+                <input
+                  type="radio"
+                  checked={direction === "TB"}
+                  onChange={() => {}}
+                  className="w-3.5 h-3.5 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span className="text-sm text-gray-700">Top to Bottom</span>
+              </label>
+            </div>
+          )}
         </div>
 
         <label className="flex items-center gap-2 cursor-pointer">

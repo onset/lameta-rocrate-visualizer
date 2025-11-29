@@ -52,7 +52,6 @@ export const useSettingsStore = create<SettingsStore>()(
         direction: state.direction,
         lastFilePath: state.lastFilePath,
         hiddenTypes: Array.from(state.hiddenTypes),
-        egoNodeId: state.egoNodeId,
         showInverseLinks: state.showInverseLinks,
       }),
       merge: (persistedState: unknown, currentState) => ({

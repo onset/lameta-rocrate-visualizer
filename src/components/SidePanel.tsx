@@ -131,18 +131,19 @@ export default function SidePanel({
             <button
               onClick={handleMakeEgo}
               disabled={isAlreadyEgo}
+              title="Trim the graph to show the paths to this element and then to the things it directly connects to."
               className={`px-3 py-1 rounded transition-colors font-medium text-sm ${
                 isAlreadyEgo
                   ? "bg-gray-200 text-gray-400 cursor-not-allowed opacity-50"
                   : "bg-[#d2691e] text-white hover:bg-[#b8581a]"
               }`}
             >
-              Make Ego
+              Focus
             </button>
           )}
         </div>
         <p className="text-xs text-gray-500 mt-2">
-          Tip: Double-click on a node to make it the ego
+          Tip: Double-click on a node to focus on it.
         </p>
       </div>
 
