@@ -19,7 +19,7 @@
       },
       "name": "Edolo Sample",
       "description": "The Etoro, or Edolo, are a tribe and ethnic group of the Southern Highlands Province of Papua New Guinea. Their territory comprises the southern slopes of Mt. Sisa, along the southern edge of the central mountain range of New Guinea, near the Papuan Plateau.",
-      "datePublished": "2025-11-29T04:08:31.943Z",
+      "datePublished": "2025-11-30T22:18:12.457Z",
       "author": {
         "@id": "#unknown-contributor"
       },
@@ -46,7 +46,7 @@
           "@id": "OtherDocuments/"
         },
         {
-          "@id": "#People"
+          "@id": "People/"
         }
       ],
       "pcdm:hasMember": [
@@ -94,7 +94,7 @@
       },
       "name": "Under the House",
       "description": "No description provided for this session.",
-      "datePublished": "2025-11-29T04:08:31.945Z",
+      "datePublished": "2025-11-30T22:18:12.460Z",
       "collectionEventType": "https://w3id.org/ldac/terms#Session",
       "publisher": {
         "@id": "#publisher-paradisec"
@@ -134,7 +134,7 @@
       ],
       "ldac:recorder": [
         {
-          "@id": "#contributor-Hatton"
+          "@id": "#Hatton"
         }
       ],
       "license": {
@@ -153,7 +153,7 @@
         "@id": "#Awi_Heole"
       },
       "isPartOf": {
-        "@id": "#Awi_Heole-files"
+        "@id": "People/Awi_Heole/"
       }
     },
     {
@@ -168,7 +168,7 @@
         "@id": "#Awi_Heole"
       },
       "isPartOf": {
-        "@id": "#Awi_Heole-files"
+        "@id": "People/Awi_Heole/"
       }
     },
     {
@@ -183,18 +183,24 @@
         "@id": "#Awi_Heole"
       },
       "isPartOf": {
-        "@id": "#Awi_Heole-files"
+        "@id": "People/Awi_Heole/"
       }
     },
     {
       "@id": "#Awi_Heole",
       "@type": "Person",
       "name": "Awi Heole",
+      "ldac:age": "38",
       "gender": "Male",
       "description": "Edolo learned in Huya. Education: Grade 2. Primary Occupation: Subsistence Farmer.",
-      "subjectOf": {
-        "@id": "People/Awi_Heole/Awi_Heole.person"
-      },
+      "subjectOf": [
+        {
+          "@id": "People/Awi_Heole/Awi_Heole.person"
+        },
+        {
+          "@id": "People/Awi_Heole/"
+        }
+      ],
       "image": [
         {
           "@id": "People/Awi_Heole/Awi_Heole_Photo.JPG"
@@ -205,7 +211,7 @@
       ]
     },
     {
-      "@id": "#contributor-Hatton",
+      "@id": "#Hatton",
       "@type": "Person",
       "name": "Hatton"
     },
@@ -237,7 +243,7 @@
       "@type": "File",
       "contentSize": 641,
       "dateCreated": "2025-11-25T00:56:28.670Z",
-      "dateModified": "2025-11-25T00:59:18.740Z",
+      "dateModified": "2025-11-30T00:42:57.293Z",
       "encodingFormat": "application/lameta-session",
       "name": "ETR008.session",
       "license": {
@@ -268,7 +274,7 @@
       },
       "name": "The story behind how we catch fish with poison bark",
       "description": "Some guys talking Situation: Walking with Ilawi, we passed the plant they use to make poison for fishing, and I asked him if he'd tell me about how to do it.  We went to his house, where Awi joined us, and the two of them took turns telling parts of the \"whole story\". Setting: Sitting on their front porch",
-      "datePublished": "2025-11-29T04:08:31.946Z",
+      "datePublished": "2025-11-30T22:18:12.460Z",
       "collectionEventType": "https://w3id.org/ldac/terms#Session",
       "publisher": {
         "@id": "#publisher-paradisec"
@@ -319,7 +325,7 @@
       ],
       "ldac:recorder": [
         {
-          "@id": "#contributor-Hatton"
+          "@id": "#Hatton"
         }
       ],
       "ldac:speaker": [
@@ -343,7 +349,7 @@
         "@id": "#Ilawi_Amosa"
       },
       "isPartOf": {
-        "@id": "#Ilawi_Amosa-files"
+        "@id": "People/Ilawi_Amosa/"
       }
     },
     {
@@ -358,7 +364,7 @@
         "@id": "#Ilawi_Amosa"
       },
       "isPartOf": {
-        "@id": "#Ilawi_Amosa-files"
+        "@id": "People/Ilawi_Amosa/"
       }
     },
     {
@@ -373,7 +379,7 @@
         "@id": "#Ilawi_Amosa"
       },
       "isPartOf": {
-        "@id": "#Ilawi_Amosa-files"
+        "@id": "People/Ilawi_Amosa/"
       }
     },
     {
@@ -383,9 +389,14 @@
       "ldac:age": "50",
       "gender": "Male",
       "description": "Edolo learned in Aiya. Education: Some bible school, some literacy training. Primary Occupation: Subsistence Farmer.",
-      "subjectOf": {
-        "@id": "People/Ilawi_Amosa/Ilawi_Amosa.person"
-      },
+      "subjectOf": [
+        {
+          "@id": "People/Ilawi_Amosa/Ilawi_Amosa.person"
+        },
+        {
+          "@id": "People/Ilawi_Amosa/"
+        }
+      ],
       "image": [
         {
           "@id": "People/Ilawi_Amosa/Ilawi_Amosa_Photo.jpg"
@@ -414,7 +425,7 @@
       "@type": "File",
       "contentSize": 1145,
       "dateCreated": "2025-11-20T15:58:01.317Z",
-      "dateModified": "2025-11-25T00:59:36.999Z",
+      "dateModified": "2025-11-29T23:32:17.400Z",
       "encodingFormat": "application/lameta-session",
       "name": "ETR009.session",
       "license": {
@@ -650,7 +661,9 @@
     {
       "@id": "#publisher-paradisec",
       "@type": "Organization",
-      "name": "PARADISEC"
+      "name": "PARADISEC",
+      "description": "Pacific and Regional Archive for Digital Sources in Endangered Cultures",
+      "url": "https://www.paradisec.org.au/"
     },
     {
       "@id": "DescriptionDocuments/pretend%20description.txt",
@@ -735,22 +748,16 @@
       }
     },
     {
-      "@id": "#People",
+      "@id": "People/",
       "@type": "Dataset",
       "name": "People",
       "description": "Directory of people associated with this collection.",
       "hasPart": [
         {
-          "@id": "#Awi_Heole-files"
+          "@id": "People/Awi_Heole/"
         },
         {
-          "@id": "#contributor-Hatton"
-        },
-        {
-          "@id": "#Ilawi_Amosa-files"
-        },
-        {
-          "@id": "#unknown-contributor"
+          "@id": "People/Ilawi_Amosa/"
         }
       ],
       "isPartOf": {
@@ -761,14 +768,14 @@
       }
     },
     {
-      "@id": "#Awi_Heole-files",
+      "@id": "People/Awi_Heole/",
       "@type": "Dataset",
       "name": "Awi_Heole files",
       "description": "Files associated with Awi_Heole.",
+      "about": {
+        "@id": "#Awi_Heole"
+      },
       "hasPart": [
-        {
-          "@id": "#Awi_Heole"
-        },
         {
           "@id": "People/Awi_Heole/Awi_Heole.person"
         },
@@ -780,21 +787,21 @@
         }
       ],
       "isPartOf": {
-        "@id": "#People"
+        "@id": "People/"
       },
       "license": {
         "@id": "#collection-license"
       }
     },
     {
-      "@id": "#Ilawi_Amosa-files",
+      "@id": "People/Ilawi_Amosa/",
       "@type": "Dataset",
       "name": "Ilawi_Amosa files",
       "description": "Files associated with Ilawi_Amosa.",
+      "about": {
+        "@id": "#Ilawi_Amosa"
+      },
       "hasPart": [
-        {
-          "@id": "#Ilawi_Amosa"
-        },
         {
           "@id": "People/Ilawi_Amosa/Ilawi_Amosa.person"
         },
@@ -806,7 +813,7 @@
         }
       ],
       "isPartOf": {
-        "@id": "#People"
+        "@id": "People/"
       },
       "license": {
         "@id": "#collection-license"

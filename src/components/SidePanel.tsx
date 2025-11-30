@@ -103,6 +103,66 @@ function findReferences(
   return references;
 }
 
+// Map property names to human-readable role names
+const ROLE_LABELS: Record<string, string> = {
+  "ldac:speaker": "Speaker",
+  "ldac:recorder": "Recorder",
+  "ldac:participant": "Participant",
+  "author": "Author",
+  "accountablePerson": "Accountable Person",
+  "dct:rightsHolder": "Rights Holder",
+  "contributor": "Contributor",
+};
+
+// Get roles for a person based on references
+function getPersonRoles(
+  references: Array<{ entity: ROCrateEntity; property: string }>
+): Array<{ role: string; context: string }> {
+  const roles: Array<{ role: string; context: string }> = [];
+  
+  references.forEach((ref) => {
+    const roleLabel = ROLE_LABELS[ref.property];
+    if (roleLabel) {
+      const contextName = ref.entity.name || ref.entity["@id"];
+      roles.push({ role: roleLabel, context: String(contextName) });
+    }
+  });
+  
+  return roles;
+}
+
+// Get display name for a person
+function getPersonDisplayName(entity: ROCrateEntity): string {
+  if (entity.name && typeof entity.name === "string") {
+    return entity.name;
+  }
+  const id = entity["@id"];
+  if (id.startsWith("#contributor-")) {
+    return id.replace("#contributor-", "");
+  }
+  if (id.startsWith("#")) {
+    return id.substring(1).replace(/_/g, " ");
+  }
+  return id;
+}
+
+// Check if entity is a Person type
+function isPerson(entity: ROCrateEntity): boolean {
+  const types = Array.isArray(entity["@type"]) ? entity["@type"] : [entity["@type"]];
+  return types.includes("Person");
+}
+
+// Filter out undefined/null/empty values from entity for display
+function getDefinedProperties(entity: ROCrateEntity): Record<string, unknown> {
+  const defined: Record<string, unknown> = {};
+  Object.entries(entity).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      defined[key] = value;
+    }
+  });
+  return defined;
+}
+
 export default function SidePanel({
   entity,
   roCrate,
@@ -149,7 +209,45 @@ export default function SidePanel({
 
       {entity ? (
         <div className="flex-1 flex flex-col min-h-0 px-4 pb-4 gap-4">
-          {/* <h3 className="text-sm font-semibold text-gray-900">JSON</h3> */}
+          {/* Person-specific view */}
+          {isPerson(entity) && (
+            <div className="flex-shrink-0 bg-white rounded-md border border-gray-200 p-3">
+              <h3 className="text-base font-semibold text-gray-900 mb-2">
+                {getPersonDisplayName(entity)}
+              </h3>
+              {entity.gender && (
+                <p className="text-sm text-gray-600">Gender: {String(entity.gender)}</p>
+              )}
+              {entity["ldac:age"] && (
+                <p className="text-sm text-gray-600">Age: {String(entity["ldac:age"])}</p>
+              )}
+              {entity.description && (
+                <p className="text-sm text-gray-600 mt-2">{String(entity.description)}</p>
+              )}
+              {/* Show roles */}
+              {(() => {
+                const roles = getPersonRoles(references);
+                if (roles.length > 0) {
+                  return (
+                    <div className="mt-3 pt-2 border-t border-gray-200">
+                      <p className="text-xs font-semibold text-gray-700 mb-1">Contributions:</p>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        {roles.map((r, idx) => (
+                          <li key={idx} className="text-xs">
+                            <span className="font-medium text-[#d2691e]">{r.role}</span>
+                            <span className="text-gray-500"> in </span>
+                            <span className="italic">{r.context}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                }
+                return null;
+              })()}
+            </div>
+          )}
+          {/* JSON view - filtered for defined properties */}
           <div className="flex-1 min-h-0 overflow-auto rounded-md border border-gray-200">
             <SyntaxHighlighter
               language="json"
@@ -163,7 +261,7 @@ export default function SidePanel({
               }}
               wrapLongLines={false}
             >
-              {JSON.stringify(entity, null, 2)}
+              {JSON.stringify(getDefinedProperties(entity), null, 2)}
             </SyntaxHighlighter>
           </div>
           {references.length > 0 && (
