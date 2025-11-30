@@ -115,22 +115,7 @@ function sanitize(str: string): string {
 }
 
 function getLabel(entity: ROCrateEntity): string {
-  // For Person entities, prefer the name property or extract from ID
-  const types = getTypes(entity);
-  if (types.includes("Person")) {
-    if (entity.name && typeof entity.name === "string") {
-      return sanitize(entity.name);
-    }
-    // Extract name from IDs like "#contributor-Hatton" or "#Awi_Heole"
-    const id = entity["@id"];
-    if (id.startsWith("#contributor-")) {
-      return sanitize(id.replace("#contributor-", ""));
-    }
-    if (id.startsWith("#")) {
-      return sanitize(id.substring(1).replace(/_/g, " "));
-    }
-  }
-  // Use @id instead of name to show the identifier in the graph
+  // Always use @id as the label to show the identifier in the graph
   const label = entity["@id"];
   return sanitize(label);
 }

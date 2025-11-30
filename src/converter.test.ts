@@ -281,10 +281,10 @@ describe("convertToMermaid - Neighborhood Mode", () => {
     const result = convertToMermaid(testCrate, {
     });
 
-    // Should contain all person nodes (by their name labels, since IDs get sanitized for Mermaid)
-    expect(result).toContain("Awi Heole");
-    expect(result).toContain("Ilawi Amosa");
-    expect(result).toContain("Hatton");
+    // Should contain all person nodes (by their @id values)
+    expect(result).toContain("#Awi_Heole");
+    expect(result).toContain("#Ilawi_Amosa");
+    expect(result).toContain("#contributor-Hatton");
 
     // Should have participant edge (with namespace prefix preserved)
     expect(result).toContain("|ldac:participant|");
